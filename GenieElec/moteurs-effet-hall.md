@@ -263,37 +263,43 @@ L'électronique de puissance ne constitue pas seulement un support fonctionnel, 
 
 #### Articles pertinents à consulter
 
-**Électronique de puissance spatiale :**
-- [ ] Convertisseurs DC/DC pour applications spatiales
-- [ ] Topologies de convertisseurs haute tension
-- [ ] PWM et commande en découpage
-- [ ] CEM et compatibilité électromagnétique spatiale
-- [ ] Composants rad-hard pour électronique de puissance
+#### Articles trouvés sur Techniques de l'Ingénieur
 
-**Propulsion électrique :**
-- [ ] Moteurs à effet Hall : principes et applications
-- [ ] Propulsion ionique et plasma
-- [ ] Power Processing Unit (PPU) pour propulsion spatiale
-- [ ] Systèmes de contrôle pour propulseurs électriques
+**Propulsion spatiale :**
+
+1. **MAZOUFFRE, Stéphane** (2018) — *Propulsion électrique pour les systèmes spatiaux*  
+   🔗 [Réf: TRP4051](https://www-techniques-ingenieur-fr.proxybib-pp.cnam.fr/base-documentaire/ingenierie-des-transports-th14/astronautique-et-technologies-spatiales-42694210/propulsion-electrique-pour-les-systemes-spatiaux-trp4051/)  
+   📌 DOI: 10.51257/a-v1-trp4051  
+   📖 Date: 10 nov. 2018, relu et validé le 01 oct. 2020  
+   👉 **Section 4.2 : Propulseurs de Hall (PH)** - Article clé pour notre sujet
+
+**Électronique de puissance :**
+
+2. **PACE, Loris ; DAIRE, Baptiste ; BELEY, Matthieu ; SALOMEZ, Florentin** (2024) — *Conversion DC-DC aux fréquences VHF - Enjeux, avancement et perspectives*  
+   🔗 [Réf: E3979](https://www-techniques-ingenieur-fr.proxybib-pp.cnam.fr/base-documentaire/electronique-photonique-th13/electronique-de-puissance-conversion-et-gestion-42283210/conversion-dc-dc-aux-frequences-vhf-e3979/)  
+   📌 DOI: 10.51257/a-v1-e3979  
+   📖 Date: 10 avr. 2024  
+   👉 Convertisseurs DC/DC haute fréquence
+
+3. **COSTA, François** (2010) — *Compatibilité électromagnétique CEM - Présentation générale*  
+   🔗 [Réf: D1300](https://www-techniques-ingenieur-fr.proxybib-pp.cnam.fr/base-documentaire/energies-th4/compatibilite-electromagnetique-42705210/compatibilite-electromagnetique-cem-d1300/)  
+   📌 DOI: 10.51257/a-v2-d1300  
+   📖 Date: 10 févr. 2010  
+   👉 CEM et filtrage pour électronique de puissance
+
+4. **Commutation douce : le cas du convertisseur Flyback**  
+   🔗 [Réf: D3078](https://www-techniques-ingenieur-fr.proxybib-pp.cnam.fr/base-documentaire/)  
+   📌 DOI: 10.51257/a-v1-d3078  
+   📖 Date: 10 nov. 2017  
+   👉 Topologies de convertisseurs avec commutation douce
 
 **Physique des plasmas :**
-- [ ] Génération et caractérisation des plasmas
-- [ ] Instabilités plasma dans les propulseurs Hall
-- [ ] Diagnostics plasma
 
-#### Recherche recommandée dans Techniques de l'Ingénieur
-
-Mots-clés de recherche :
-```
-"convertisseur DC/DC spatial"
-"propulsion électrique Hall"
-"électronique de puissance spatiale"
-"Power Processing Unit"
-"plasma propulsion"
-"PWM haute tension"
-"composants rad-hard"
-```
-
+5. **Gaz ionisés et plasmas**  
+   🔗 [Réf: AF3560](https://www-techniques-ingenieur-fr.proxybib-pp.cnam.fr/base-documentaire/)  
+   📌 DOI: 10.51257/a-v1-af3560  
+   📖 Date: 10 juil. 2000  
+   👉 Fondamentaux des plasmas et ionisation
 #### Guide d'accès
 
 1. Aller sur [bibliotheques.cnam.fr](https://bibliotheques.cnam.fr)
