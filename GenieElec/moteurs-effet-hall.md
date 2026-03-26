@@ -257,6 +257,53 @@ L'électronique de puissance ne constitue pas seulement un support fonctionnel, 
 
 #### Bases de données
 
+### 📚 Techniques de l'Ingénieur (CNAM)
+
+> 🔑 Accès via [bibliotheques.cnam.fr](https://bibliotheques.cnam.fr) avec identifiants ENF
+
+#### Articles pertinents à consulter
+
+**Électronique de puissance spatiale :**
+- [ ] Convertisseurs DC/DC pour applications spatiales
+- [ ] Topologies de convertisseurs haute tension
+- [ ] PWM et commande en découpage
+- [ ] CEM et compatibilité électromagnétique spatiale
+- [ ] Composants rad-hard pour électronique de puissance
+
+**Propulsion électrique :**
+- [ ] Moteurs à effet Hall : principes et applications
+- [ ] Propulsion ionique et plasma
+- [ ] Power Processing Unit (PPU) pour propulsion spatiale
+- [ ] Systèmes de contrôle pour propulseurs électriques
+
+**Physique des plasmas :**
+- [ ] Génération et caractérisation des plasmas
+- [ ] Instabilités plasma dans les propulseurs Hall
+- [ ] Diagnostics plasma
+
+#### Recherche recommandée dans Techniques de l'Ingénieur
+
+Mots-clés de recherche :
+```
+"convertisseur DC/DC spatial"
+"propulsion électrique Hall"
+"électronique de puissance spatiale"
+"Power Processing Unit"
+"plasma propulsion"
+"PWM haute tension"
+"composants rad-hard"
+```
+
+#### Guide d'accès
+
+1. Aller sur [bibliotheques.cnam.fr](https://bibliotheques.cnam.fr)
+2. Cliquer sur "Bases de données"
+3. Rechercher "Techniques de l'ingénieur"
+4. S'authentifier avec identifiants ENF
+5. Rechercher les articles avec les mots-clés ci-dessus
+
+
+
 - **IEEE Xplore** : articles électronique de puissance
 - **Google Scholar** : thèses et publications académiques
 - **arXiv** : preprints physique des plasmas
