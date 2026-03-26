@@ -326,7 +326,7 @@ L'électronique de puissance ne constitue pas seulement un support fonctionnel, 
 
 ## 📝 Notes
 
-**Auteurs** : Dylan Perinetti, Maxime Deplace  
+**Auteurs** : Dylan Perinetti, Maxime Deplace, Hamet Doumbouya  
 **Établissement** : CNAM — Ingénieur2000  
 **Matière** : Électronique de puissance  
 **Date** : Mars 2026
