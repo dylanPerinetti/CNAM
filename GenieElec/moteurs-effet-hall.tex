@@ -1,0 +1,134 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+
+\title{Propulsion Spatiale par Effet Hall: Technologies et Applications}
+\author{Dylan Perinetti \and Hamet Doumbouya}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Introduction}
+
+La propulsion par effet Hall représente une technologie de propulsion électrique spatiale qui utilise les champs électriques et magnétiques pour ioniser et accélérer un propergol, généralement du xénon. Cette technologie est devenue essentielle pour les missions spatiales modernes, offrant une efficacité énergétique supérieure aux systèmes de propulsion chimique conventionnels.
+
+\subsection{Contexte historique}
+
+Développés initialement en Union Soviétique dans les années 1960, les propulseurs à effet Hall ont connu un développement significatif au cours des dernières décennies. Leur adoption par les agences spatiales occidentales et les entreprises privées témoigne de leur maturité technologique et de leur performance opérationnelle.
+
+\subsection{Objectifs du document}
+
+Ce document présente une analyse technique des propulseurs à effet Hall, incluant:
+\begin{itemize}
+    \item Les principes physiques fondamentaux
+    \item Les technologies actuelles et leurs applications
+    \item Les performances et limitations
+    \item Les perspectives de développement
+\end{itemize}
+
+\section{Principes Physiques}
+
+\subsection{Effet Hall et ionisation}
+
+L'effet Hall, découvert en 1879 par Edwin Hall, est au cœur du fonctionnement de ces propulseurs. Dans un propulseur à effet Hall, un champ magnétique radial et un champ électrique axial créent une configuration qui piège les électrons dans un mouvement azimutal, formant ainsi un courant de Hall.
+
+\subsection{Processus d'ionisation du plasma}
+
+Le propergol gazeux, généralement du xénon, est injecté dans la chambre d'ionisation où il rencontre les électrons piégés. Les collisions entre les électrons à haute énergie et les atomes neutres conduisent à l'ionisation:
+
+\begin{equation}
+Xe + e^- \rightarrow Xe^+ + 2e^-
+\end{equation}
+
+Les ions xénon ainsi créés sont alors accélérés par le champ électrique, produisant la poussée.
+
+\subsection{Génération de la poussée}
+
+La poussée $F$ générée par le propulseur est directement liée au débit massique $\dot{m}$ et à la vitesse d'éjection $v_e$:
+
+\begin{equation}
+F = \dot{m} \cdot v_e
+\end{equation}
+
+L'impulsion spécifique $I_{sp}$, mesure de l'efficacité du propulseur, peut atteindre 1500-3000 secondes pour les propulseurs à effet Hall modernes:
+
+\begin{equation}
+I_{sp} = \frac{v_e}{g_0}
+\end{equation}
+
+où $g_0$ est l'accélération gravitationnelle standard.
+
+\section{Technologies Actuelles}
+
+\subsection{Architectures des propulseurs}
+
+Deux architectures principales dominent le marché:
+
+\begin{itemize}
+    \item \textbf{SPT (Stationary Plasma Thruster)}: Configuration à canal annulaire avec parois diélectriques
+    \item \textbf{TAL (Thruster with Anode Layer)}: Configuration à canal court avec parois métalliques
+\end{itemize}
+
+\subsection{Performances typiques}
+
+\begin{table}[H]
+\centering
+\caption{Caractéristiques typiques des propulseurs à effet Hall}
+\begin{tabular}{|l|c|}
+\hline
+\textbf{Paramètre} & \textbf{Valeur typique} \\
+\hline
+Puissance électrique & 0.5 - 20 kW \\
+Poussée & 20 - 500 mN \\
+Impulsion spécifique & 1500 - 3000 s \\
+Rendement & 45 - 60\% \\
+Durée de vie & 5000 - 10000 h \\
+\hline
+\end{tabular}
+\end{table}
+
+\section{Applications}
+
+\subsection{Maintien en orbite}
+
+Les satellites géostationnaires utilisent les propulseurs à effet Hall pour les corrections d'orbite et le contrôle d'attitude, permettant des économies significatives en masse de propergol.
+
+\subsection{Missions interplanétaires}
+
+La mission BepiColombo de l'ESA vers Mercure utilise des propulseurs à effet Hall pour sa propulsion primaire, démontrant leur capacité pour les missions de longue durée.
+
+\section{Défis Technologiques}
+
+\subsection{Érosion des parois}
+
+L'interaction du plasma avec les parois du canal d'accélération provoque une érosion progressive qui limite la durée de vie opérationnelle du propulseur.
+
+\subsection{Instabilités du plasma}
+
+Les oscillations du plasma peuvent affecter la performance et la stabilité du propulseur, nécessitant des stratégies de contrôle sophistiquées.
+
+\section{Perspectives}
+
+Les développements futurs visent l'amélioration de la durée de vie, l'augmentation de la poussée spécifique, et l'optimisation pour les missions vers Mars et au-delà.
+
+\section{Références}
+
+Sources consultées:
+\begin{itemize}
+    \item Techniques de l'Ingénieur - Articles sur la propulsion électrique spatiale
+    \item Documentation technique CNAM
+    \item Littérature scientifique sur les propulseurs à effet Hall
+\end{itemize}
+
+\end{document}
