@@ -1,0 +1,1696 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Réglementation Aéronautique — Agences Fédérales & Investigation</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    :root {
+      --bg-primary: #0a0e1a;
+      --bg-secondary: #111827;
+      --bg-card: #1a2135;
+      --bg-card-hover: #1f2a42;
+      --accent-blue: #3b82f6;
+      --accent-cyan: #06b6d4;
+      --accent-purple: #8b5cf6;
+      --accent-orange: #f59e0b;
+      --accent-green: #10b981;
+      --accent-red: #ef4444;
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --border: #1e293b;
+      --glow-blue: rgba(59, 130, 246, 0.15);
+      --glow-cyan: rgba(6, 182, 212, 0.15);
+      --glow-purple: rgba(139, 92, 246, 0.15);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* ===== PARTICLE CANVAS ===== */
+    #particles-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ===== NAVIGATION ===== */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(10, 14, 26, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      transition: all 0.3s ease;
+    }
+
+    .nav.scrolled {
+      padding: 0.6rem 2rem;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    .nav-logo svg {
+      width: 28px; height: 28px;
+      color: var(--accent-blue);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.25rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      padding: 0.5rem 1rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--text-primary);
+      background: rgba(59, 130, 246, 0.1);
+    }
+
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: 2px; left: 50%;
+      transform: translateX(-50%);
+      width: 20px; height: 2px;
+      background: var(--accent-blue);
+      border-radius: 2px;
+    }
+
+    .nav-progress {
+      position: absolute;
+      bottom: 0; left: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan), var(--accent-purple));
+      transition: width 0.3s ease;
+    }
+
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 5px;
+    }
+
+    .nav-hamburger span {
+      width: 24px; height: 2px;
+      background: var(--text-primary);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    /* ===== HERO SECTION (SLIDE 1) ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 6rem 2rem 4rem;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 40%, var(--glow-blue) 0%, transparent 50%),
+                  radial-gradient(circle at 70% 60%, var(--glow-purple) 0%, transparent 50%),
+                  radial-gradient(circle at 50% 80%, var(--glow-cyan) 0%, transparent 40%);
+      animation: heroGlow 10s ease-in-out infinite alternate;
+    }
+
+    @keyframes heroGlow {
+      0% { transform: rotate(0deg) scale(1); }
+      100% { transform: rotate(5deg) scale(1.05); }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1rem;
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--accent-blue);
+      margin-bottom: 2rem;
+      animation: fadeInDown 0.8s ease;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--accent-blue);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      animation: fadeInUp 0.8s ease 0.2s both;
+    }
+
+    .hero h1 .gradient-text {
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan), var(--accent-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      max-width: 650px;
+      margin: 0 auto 2.5rem;
+      animation: fadeInUp 0.8s ease 0.4s both;
+      line-height: 1.7;
+    }
+
+    .hero-agencies {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      animation: fadeInUp 0.8s ease 0.6s both;
+    }
+
+    .agency-chip {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.2rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      cursor: default;
+    }
+
+    .agency-chip:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent-blue);
+      box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15);
+    }
+
+    .agency-chip .flag { font-size: 1.2rem; }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      animation: fadeInUp 0.8s ease 1s both;
+    }
+
+    .scroll-indicator .mouse {
+      width: 22px; height: 34px;
+      border: 2px solid var(--text-muted);
+      border-radius: 12px;
+      position: relative;
+    }
+
+    .scroll-indicator .mouse::after {
+      content: '';
+      position: absolute;
+      top: 6px; left: 50%;
+      transform: translateX(-50%);
+      width: 3px; height: 6px;
+      background: var(--text-muted);
+      border-radius: 3px;
+      animation: scrollMouse 1.5s infinite;
+    }
+
+    @keyframes scrollMouse {
+      0% { transform: translateX(-50%) translateY(0); opacity: 1; }
+      100% { transform: translateX(-50%) translateY(10px); opacity: 0; }
+    }
+
+    /* ===== SECTION STYLING ===== */
+    .section {
+      padding: 6rem 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-number {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--accent-blue);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+      font-weight: 800;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .section-desc {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* ===== SOURCES SECTION (SLIDE 2) ===== */
+    .sources-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .source-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.75rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .source-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 3px;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .source-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(59, 130, 246, 0.3);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+    }
+
+    .source-card:hover::before { opacity: 1; }
+
+    .source-type {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      background: rgba(59, 130, 246, 0.1);
+      color: var(--accent-blue);
+      border-radius: 6px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+    }
+
+    .source-type.official { background: rgba(16, 185, 129, 0.1); color: var(--accent-green); }
+    .source-type.convention { background: rgba(139, 92, 246, 0.1); color: var(--accent-purple); }
+    .source-type.regulation { background: rgba(245, 158, 11, 0.1); color: var(--accent-orange); }
+
+    .source-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .source-card p {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .source-icon {
+      width: 40px; height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(59, 130, 246, 0.1);
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+    }
+
+    /* ===== AGENCIES COMPARISON (SLIDE 3) ===== */
+    .comparison-section {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .comparison-toggle {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .toggle-btn {
+      padding: 0.6rem 1.5rem;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .toggle-btn.active {
+      background: var(--accent-blue);
+      border-color: var(--accent-blue);
+      color: white;
+      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+    }
+
+    .toggle-btn:hover:not(.active) {
+      border-color: var(--accent-blue);
+      color: var(--text-primary);
+    }
+
+    .comparison-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      position: relative;
+    }
+
+    .comparison-wrapper::before {
+      content: 'VS';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 50px; height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-primary);
+      border: 2px solid var(--border);
+      border-radius: 50%;
+      font-weight: 800;
+      font-size: 0.85rem;
+      color: var(--accent-blue);
+      z-index: 2;
+    }
+
+    .agency-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2rem;
+      transition: all 0.3s ease;
+    }
+
+    .agency-panel:hover {
+      border-color: rgba(59, 130, 246, 0.3);
+    }
+
+    .agency-panel-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .agency-logo {
+      width: 56px; height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 14px;
+      font-size: 1.6rem;
+      font-weight: 800;
+    }
+
+    .agency-logo.easa {
+      background: linear-gradient(135deg, #003399, #0055aa);
+      color: white;
+      font-size: 0.75rem;
+    }
+
+    .agency-logo.faa {
+      background: linear-gradient(135deg, #b22234, #3c3b6e);
+      color: white;
+      font-size: 0.85rem;
+    }
+
+    .agency-panel-header div h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .agency-panel-header div p {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+    }
+
+    .agency-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .agency-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.75rem;
+      background: rgba(255,255,255,0.02);
+      border-radius: 10px;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      transition: all 0.2s ease;
+    }
+
+    .agency-features li:hover {
+      background: rgba(59, 130, 246, 0.05);
+      color: var(--text-primary);
+    }
+
+    .feature-icon {
+      width: 28px; height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(59, 130, 246, 0.1);
+      border-radius: 7px;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    /* Enjeux section */
+    .enjeux-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .enjeu-card {
+      text-align: center;
+      padding: 2rem 1.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .enjeu-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(59, 130, 246, 0.3);
+    }
+
+    .enjeu-icon {
+      width: 56px; height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+      background: rgba(59, 130, 246, 0.1);
+      border-radius: 14px;
+      font-size: 1.5rem;
+    }
+
+    .enjeu-card h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .enjeu-card p {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ===== INVESTIGATION SECTION (SLIDE 4) ===== */
+    .investigation-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .invest-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .invest-panel::after {
+      content: '';
+      position: absolute;
+      bottom: -30px; right: -30px;
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--glow-blue), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .invest-panel:hover::after { opacity: 1; }
+
+    .invest-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .invest-logo {
+      width: 48px; height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 0.8rem;
+      color: white;
+    }
+
+    .invest-logo.bea { background: linear-gradient(135deg, #002654, #0055aa); }
+    .invest-logo.ntsb { background: linear-gradient(135deg, #b22234, #002868); }
+
+    .invest-header div h3 { font-size: 1.1rem; font-weight: 700; }
+    .invest-header div p { font-size: 0.8rem; color: var(--text-secondary); }
+
+    .mission-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .mission-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      padding: 0.5rem 0;
+    }
+
+    .mission-list li .dot {
+      width: 6px; height: 6px;
+      background: var(--accent-blue);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .key-principle {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 2rem;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(139, 92, 246, 0.05));
+      border: 1px solid rgba(59, 130, 246, 0.15);
+      border-radius: 16px;
+      margin-top: 2rem;
+    }
+
+    .key-icon {
+      width: 64px; height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(59, 130, 246, 0.1);
+      border-radius: 16px;
+      font-size: 1.8rem;
+      flex-shrink: 0;
+    }
+
+    .key-principle h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+
+    .key-principle p {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ===== TIMELINE SECTION (SLIDE 5) ===== */
+    .timeline-section {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .timeline {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      left: 32px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--accent-blue), var(--accent-cyan), var(--accent-purple));
+    }
+
+    .timeline-item {
+      display: flex;
+      gap: 2rem;
+      padding: 1.5rem 0;
+      position: relative;
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: all 0.6s ease;
+    }
+
+    .timeline-item.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .timeline-step {
+      width: 64px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .step-number {
+      width: 42px; height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-primary);
+      border: 2px solid var(--accent-blue);
+      border-radius: 50%;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--accent-blue);
+      position: relative;
+      z-index: 2;
+      transition: all 0.3s ease;
+    }
+
+    .timeline-item:hover .step-number {
+      background: var(--accent-blue);
+      color: white;
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+    }
+
+    .timeline-content {
+      flex: 1;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .timeline-content:hover {
+      border-color: rgba(59, 130, 246, 0.3);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+    }
+
+    .timeline-content h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-content p {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .timeline-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.75rem;
+    }
+
+    .timeline-tag {
+      padding: 0.2rem 0.6rem;
+      background: rgba(59, 130, 246, 0.1);
+      color: var(--accent-blue);
+      border-radius: 6px;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    .timeline-tag.green { background: rgba(16, 185, 129, 0.1); color: var(--accent-green); }
+    .timeline-tag.purple { background: rgba(139, 92, 246, 0.1); color: var(--accent-purple); }
+    .timeline-tag.orange { background: rgba(245, 158, 11, 0.1); color: var(--accent-orange); }
+
+    .duration-badge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-top: 3rem;
+      padding: 1.25rem 2rem;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(6, 182, 212, 0.08));
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      border-radius: 14px;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .duration-badge .icon { font-size: 1.5rem; }
+
+    .duration-badge div strong {
+      display: block;
+      font-size: 1.1rem;
+      margin-bottom: 0.1rem;
+    }
+
+    .duration-badge div span {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+    }
+
+    /* ===== AF447 CASE STUDY ===== */
+    .case-study {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .case-study::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent-red), var(--accent-orange), var(--accent-blue));
+    }
+
+    .case-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.3rem 0.8rem;
+      background: rgba(239, 68, 68, 0.1);
+      color: var(--accent-red);
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1.25rem;
+    }
+
+    .case-study h3 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 0.3rem;
+    }
+
+    .case-study .case-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+    }
+
+    .case-details {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .case-detail {
+      text-align: center;
+      padding: 1rem;
+      background: rgba(255,255,255,0.02);
+      border-radius: 12px;
+    }
+
+    .case-detail .value {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--accent-blue);
+    }
+
+    .case-detail .label {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      margin-top: 0.2rem;
+    }
+
+    .case-text {
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      border-left: 3px solid var(--accent-blue);
+      padding-left: 1.25rem;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      padding: 3rem 2rem;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .footer .footer-brand {
+      font-weight: 700;
+      color: var(--text-secondary);
+      margin-bottom: 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .comparison-wrapper { grid-template-columns: 1fr; }
+      .comparison-wrapper::before { display: none; }
+      .investigation-grid { grid-template-columns: 1fr; }
+      .enjeux-grid { grid-template-columns: 1fr; }
+      .case-details { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%; left: 0; right: 0;
+        background: rgba(10, 14, 26, 0.95);
+        backdrop-filter: blur(20px);
+        padding: 1rem;
+        border-bottom: 1px solid var(--border);
+      }
+      .enjeux-grid { grid-template-columns: 1fr 1fr; }
+      .hero-agencies { gap: 0.75rem; }
+      .key-principle { flex-direction: column; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      .enjeux-grid { grid-template-columns: 1fr; }
+      .section { padding: 4rem 1.25rem; }
+    }
+
+    /* ===== COMPARISON TABLE ===== */
+    .comparison-table {
+      display: none;
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-top: 2rem;
+    }
+
+    .comparison-table.active { display: table; }
+
+    .comparison-table th {
+      padding: 1rem 1.25rem;
+      text-align: left;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.02);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .comparison-table td {
+      padding: 1rem 1.25rem;
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .comparison-table tr:last-child td { border-bottom: none; }
+
+    .comparison-table tr:hover td {
+      background: rgba(59, 130, 246, 0.03);
+    }
+
+    .comparison-cards.active { display: grid; }
+    .comparison-cards { display: grid; }
+  </style>
+</head>
+<body>
+
+  <!-- Particles Background -->
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Navigation -->
+  <nav class="nav" id="navbar">
+    <a href="#hero" class="nav-logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>
+      </svg>
+      Réglementation Aéro
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#hero" class="active" data-section="hero">Accueil</a></li>
+      <li><a href="#sources" data-section="sources">Sources</a></li>
+      <li><a href="#federales" data-section="federales">Agences Fédérales</a></li>
+      <li><a href="#investigation" data-section="investigation">Investigation</a></li>
+      <li><a href="#enquete" data-section="enquete">Enquête BEA</a></li>
+      <li><a href="#cas" data-section="cas">Cas AF447</a></li>
+    </ul>
+    <div class="nav-hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+    <div class="nav-progress" id="navProgress"></div>
+  </nav>
+
+  <!-- SLIDE 1 — Hero -->
+  <section class="hero" id="hero">
+    <div class="hero-content">
+      <div class="hero-badge">CNAM Ingénieur2000 — Réglementation Aéronautique</div>
+      <h1>
+        Agences Fédérales &<br>
+        <span class="gradient-text">Agences d'Investigation</span><br>
+        en Aéronautique
+      </h1>
+      <p class="hero-subtitle">
+        La sécurité aérienne mondiale repose sur un écosystème d'agences spécialisées : 
+        les unes réglementent et certifient, les autres enquêtent et recommandent.
+        Découvrez les acteurs clés qui assurent la sûreté du ciel.
+      </p>
+      <div class="hero-agencies">
+        <div class="agency-chip"><span class="flag">🇪🇺</span> EASA</div>
+        <div class="agency-chip"><span class="flag">🇺🇸</span> FAA</div>
+        <div class="agency-chip"><span class="flag">🇫🇷</span> BEA</div>
+        <div class="agency-chip"><span class="flag">🇺🇸</span> NTSB</div>
+      </div>
+    </div>
+    <div class="scroll-indicator">
+      <div class="mouse"></div>
+      Défiler
+    </div>
+  </section>
+
+  <!-- SLIDE 2 — Sources -->
+  <section class="section" id="sources">
+    <div class="section-container">
+      <div class="section-header reveal">
+        <div class="section-number">Slide 02</div>
+        <h2 class="section-title">Documents & Sources</h2>
+        <p class="section-desc">Les références documentaires utilisées pour cette présentation</p>
+      </div>
+      <div class="sources-grid">
+        <div class="source-card reveal reveal-delay-1">
+          <div class="source-icon">📰</div>
+          <span class="source-type">Article de presse</span>
+          <h3>« Comment fonctionne le BEA »</h3>
+          <p>Article du Figaro détaillant le fonctionnement interne du Bureau d'Enquêtes et d'Analyses pour la sécurité de l'aviation civile.</p>
+        </div>
+        <div class="source-card reveal reveal-delay-2">
+          <div class="source-icon">🌐</div>
+          <span class="source-type official">Site officiel</span>
+          <h3>Site officiel du BEA</h3>
+          <p>bea.aero — Accès aux rapports d'enquêtes, recommandations de sécurité et actualités du bureau.</p>
+        </div>
+        <div class="source-card reveal reveal-delay-3">
+          <div class="source-icon">📜</div>
+          <span class="source-type convention">Convention internationale</span>
+          <h3>Convention OACI — Annexe 13</h3>
+          <p>Normes et pratiques recommandées internationales pour les enquêtes sur les accidents et incidents d'aviation.</p>
+        </div>
+        <div class="source-card reveal reveal-delay-4">
+          <div class="source-icon">📋</div>
+          <span class="source-type regulation">Documents réglementaires</span>
+          <h3>Réglementation EASA & FAA</h3>
+          <p>Documents officiels des cadres réglementaires européen et américain en matière d'aviation civile.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 3 — Agences Fédérales -->
+  <section class="section comparison-section" id="federales">
+    <div class="section-container">
+      <div class="section-header reveal">
+        <div class="section-number">Slide 03</div>
+        <h2 class="section-title">Rôle des Agences Fédérales</h2>
+        <p class="section-desc">Réglementation, certification et surveillance de la sécurité aérienne</p>
+      </div>
+
+      <div class="comparison-toggle reveal">
+        <button class="toggle-btn active" data-view="cards">Fiches</button>
+        <button class="toggle-btn" data-view="table">Tableau comparatif</button>
+      </div>
+
+      <!-- Cards View -->
+      <div class="comparison-wrapper comparison-cards active reveal" id="cardsView">
+        <div class="agency-panel">
+          <div class="agency-panel-header">
+            <div class="agency-logo easa">EASA</div>
+            <div>
+              <h3>EASA 🇪🇺</h3>
+              <p>European Union Aviation Safety Agency</p>
+            </div>
+          </div>
+          <ul class="agency-features">
+            <li><span class="feature-icon">📏</span> Élabore les règles communes de sécurité pour l'UE</li>
+            <li><span class="feature-icon">✈️</span> Certifie les aéronefs et les équipements</li>
+            <li><span class="feature-icon">🔍</span> Surveille la sécurité aérienne européenne</li>
+            <li><span class="feature-icon">📄</span> Émet des normes et directives européennes</li>
+            <li><span class="feature-icon">🤝</span> Coopère avec les autorités nationales</li>
+          </ul>
+        </div>
+        <div class="agency-panel">
+          <div class="agency-panel-header">
+            <div class="agency-logo faa">FAA</div>
+            <div>
+              <h3>FAA 🇺🇸</h3>
+              <p>Federal Aviation Administration</p>
+            </div>
+          </div>
+          <ul class="agency-features">
+            <li><span class="feature-icon">📏</span> Régule l'aviation civile aux États-Unis</li>
+            <li><span class="feature-icon">🗼</span> Contrôle le trafic aérien (ATC)</li>
+            <li><span class="feature-icon">✈️</span> Certifie les aéronefs et licences pilotes</li>
+            <li><span class="feature-icon">🔍</span> Inspecte et surveille les compagnies</li>
+            <li><span class="feature-icon">📄</span> Émet des Airworthiness Directives (AD)</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Table View -->
+      <table class="comparison-table" id="tableView">
+        <thead>
+          <tr>
+            <th>Critère</th>
+            <th>🇪🇺 EASA</th>
+            <th>🇺🇸 FAA</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Juridiction</strong></td>
+            <td>Union Européenne (31 pays)</td>
+            <td>États-Unis d'Amérique</td>
+          </tr>
+          <tr>
+            <td><strong>Création</strong></td>
+            <td>2002</td>
+            <td>1958</td>
+          </tr>
+          <tr>
+            <td><strong>Mission principale</strong></td>
+            <td>Règles communes de sécurité UE</td>
+            <td>Régulation + contrôle trafic aérien</td>
+          </tr>
+          <tr>
+            <td><strong>Certification</strong></td>
+            <td>Aéronefs & équipements</td>
+            <td>Aéronefs, pilotes & mécaniciens</td>
+          </tr>
+          <tr>
+            <td><strong>Contrôle trafic</strong></td>
+            <td>Non (Eurocontrol)</td>
+            <td>Oui (intégré à la FAA)</td>
+          </tr>
+          <tr>
+            <td><strong>Normes</strong></td>
+            <td>CS (Certification Specifications)</td>
+            <td>FAR (Federal Aviation Regulations)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Enjeux -->
+      <div class="enjeux-grid reveal">
+        <div class="enjeu-card">
+          <div class="enjeu-icon">🛡️</div>
+          <h4>Sécurité des vols</h4>
+          <p>Garantir la protection des passagers et des équipages par des normes strictes et une surveillance continue.</p>
+        </div>
+        <div class="enjeu-card">
+          <div class="enjeu-icon">🌍</div>
+          <h4>Harmonisation internationale</h4>
+          <p>Convergence EASA-FAA pour faciliter la certification croisée et le commerce aéronautique mondial.</p>
+        </div>
+        <div class="enjeu-card">
+          <div class="enjeu-icon">🚀</div>
+          <h4>Innovation</h4>
+          <p>Adapter la réglementation aux nouvelles technologies : drones, eVTOL, new space et intelligence artificielle.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 4 — Agences d'Investigation -->
+  <section class="section" id="investigation">
+    <div class="section-container">
+      <div class="section-header reveal">
+        <div class="section-number">Slide 04</div>
+        <h2 class="section-title">Agences d'Investigation</h2>
+        <p class="section-desc">Analyse des accidents, prévention et recommandations de sécurité</p>
+      </div>
+
+      <div class="investigation-grid">
+        <div class="invest-panel reveal reveal-delay-1">
+          <div class="invest-header">
+            <div class="invest-logo bea">BEA</div>
+            <div>
+              <h3>BEA 🇫🇷</h3>
+              <p>Bureau d'Enquêtes et d'Analyses</p>
+            </div>
+          </div>
+          <ul class="mission-list">
+            <li><span class="dot"></span> Enquêtes techniques sur les accidents en France</li>
+            <li><span class="dot"></span> Analyse des boîtes noires (FDR & CVR)</li>
+            <li><span class="dot"></span> Publication de rapports publics détaillés</li>
+            <li><span class="dot"></span> Émission de recommandations de sécurité</li>
+            <li><span class="dot"></span> Coopération OACI pour les vols internationaux</li>
+            <li><span class="dot"></span> Rattaché au Ministère des Transports</li>
+          </ul>
+        </div>
+        <div class="invest-panel reveal reveal-delay-2">
+          <div class="invest-header">
+            <div class="invest-logo ntsb">NTSB</div>
+            <div>
+              <h3>NTSB 🇺🇸</h3>
+              <p>National Transportation Safety Board</p>
+            </div>
+          </div>
+          <ul class="mission-list">
+            <li><span class="dot"></span> Enquêtes sur tous les modes de transport (USA)</li>
+            <li><span class="dot"></span> Détermination des causes probables</li>
+            <li><span class="dot"></span> Recommandations à la FAA et au Congrès</li>
+            <li><span class="dot"></span> Maintien d'une base de données accidents</li>
+            <li><span class="dot"></span> Agence fédérale indépendante</li>
+            <li><span class="dot"></span> Aucun pouvoir réglementaire direct</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="key-principle reveal">
+        <div class="key-icon">⚖️</div>
+        <div>
+          <h4>Principe fondamental : prévention, pas sanction</h4>
+          <p>Les agences d'investigation sont strictement indépendantes des autorités judiciaires. Leur objectif unique est de comprendre les causes des accidents pour éviter qu'ils ne se reproduisent, et non de désigner des responsables ou d'attribuer des fautes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 5 — Déroulement d'une enquête BEA -->
+  <section class="section timeline-section" id="enquete">
+    <div class="section-container">
+      <div class="section-header reveal">
+        <div class="section-number">Slide 05</div>
+        <h2 class="section-title">Déroulement d'une Enquête BEA</h2>
+        <p class="section-desc">Les étapes clés d'une investigation après un accident aérien</p>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item" data-step="1">
+          <div class="timeline-step">
+            <div class="step-number">1</div>
+          </div>
+          <div class="timeline-content">
+            <h4>Notification de l'accident</h4>
+            <p>Le BEA est immédiatement alerté par les services de secours, la compagnie aérienne ou la DGAC. L'activation de la cellule de crise est déclenchée.</p>
+            <div class="timeline-tags">
+              <span class="timeline-tag">Alerte immédiate</span>
+              <span class="timeline-tag orange">DGAC</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-step="2">
+          <div class="timeline-step">
+            <div class="step-number">2</div>
+          </div>
+          <div class="timeline-content">
+            <h4>Nomination de l'Enquêteur Désigné (ED)</h4>
+            <p>Un enquêteur expérimenté est nommé pour diriger l'investigation. Il constitue son équipe et définit le périmètre de l'enquête.</p>
+            <div class="timeline-tags">
+              <span class="timeline-tag purple">Enquêteur Désigné</span>
+              <span class="timeline-tag">Équipe technique</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-step="3">
+          <div class="timeline-step">
+            <div class="step-number">3</div>
+          </div>
+          <div class="timeline-content">
+            <h4>Collecte de données</h4>
+            <p>Récupération et exploitation des éléments de preuve : boîtes noires (FDR et CVR), analyse des débris, recueil des témoignages, données radar et météorologiques.</p>
+            <div class="timeline-tags">
+              <span class="timeline-tag">Boîtes noires</span>
+              <span class="timeline-tag green">FDR</span>
+              <span class="timeline-tag green">CVR</span>
+              <span class="timeline-tag orange">Débris</span>
+              <span class="timeline-tag">Témoignages</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-step="4">
+          <div class="timeline-step">
+            <div class="step-number">4</div>
+          </div>
+          <div class="timeline-content">
+            <h4>Analyse approfondie</h4>
+            <p>Étude multidimensionnelle croisant les facteurs humains, techniques et environnementaux. Simulations, essais en laboratoire et reconstitutions.</p>
+            <div class="timeline-tags">
+              <span class="timeline-tag purple">Facteurs humains</span>
+              <span class="timeline-tag">Technique</span>
+              <span class="timeline-tag green">Environnement</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-step="5">
+          <div class="timeline-step">
+            <div class="step-number">5</div>
+          </div>
+          <div class="timeline-content">
+            <h4>Coopération internationale</h4>
+            <p>Conformément à l'Annexe 13 de l'OACI, le BEA collabore avec les autorités des pays concernés : État d'immatriculation, de conception, d'exploitation.</p>
+            <div class="timeline-tags">
+              <span class="timeline-tag">OACI</span>
+              <span class="timeline-tag orange">Annexe 13</span>
+              <span class="timeline-tag purple">Multi-États</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-step="6">
+          <div class="timeline-step">
+            <div class="step-number">6</div>
+          </div>
+          <div class="timeline-content">
+            <h4>Rapport final & Recommandations</h4>
+            <p>Publication d'un rapport détaillé établissant les causes probables et formulant des recommandations de sécurité à destination des constructeurs, opérateurs et régulateurs.</p>
+            <div class="timeline-tags">
+              <span class="timeline-tag green">Causes probables</span>
+              <span class="timeline-tag">Recommandations</span>
+              <span class="timeline-tag orange">Publication publique</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="duration-badge reveal">
+        <span class="icon">⏱️</span>
+        <div>
+          <strong>~2 ans en moyenne</strong>
+          <span>Durée typique d'une enquête du BEA</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BONUS — Cas AF447 -->
+  <section class="section" id="cas">
+    <div class="section-container">
+      <div class="section-header reveal">
+        <div class="section-number">Bonus</div>
+        <h2 class="section-title">Étude de Cas : Vol AF447</h2>
+        <p class="section-desc">L'accident qui a transformé la sécurité aérienne mondiale</p>
+      </div>
+
+      <div class="case-study reveal">
+        <div class="case-badge">🔴 Accident majeur</div>
+        <h3>Vol Air France 447 — Rio-Paris</h3>
+        <p class="case-subtitle">1ᵉʳ juin 2009 — Océan Atlantique</p>
+
+        <div class="case-details">
+          <div class="case-detail">
+            <div class="value">228</div>
+            <div class="label">Victimes</div>
+          </div>
+          <div class="case-detail">
+            <div class="value">3 ans</div>
+            <div class="label">Durée de l'enquête</div>
+          </div>
+          <div class="case-detail">
+            <div class="value">2012</div>
+            <div class="label">Rapport final BEA</div>
+          </div>
+        </div>
+
+        <div class="case-text">
+          <p>Le vol AF447, un Airbus A330-200, disparaît dans l'Atlantique au cours d'un vol entre Rio de Janeiro et Paris. L'enquête du BEA, l'une des plus complexes de l'histoire, a nécessité la récupération des boîtes noires par 3 800 mètres de fond, deux ans après le crash.</p>
+          <br>
+          <p>L'analyse a révélé le givrage des sondes Pitot et une gestion inadéquate de la situation par l'équipage. Cette enquête exemplaire a mobilisé une coopération internationale majeure et conduit à des <strong>recommandations décisives</strong> : amélioration de la formation au pilotage manuel en haute altitude, refonte des sondes anémométriques, et révision des procédures de l'alarme de décrochage.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p class="footer-brand">Réglementation Aéronautique — CNAM Ingénieur2000</p>
+    <p>Agences fédérales et agences d'investigation en aéronautique</p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // ===== PARTICLES BACKGROUND =====
+    (function() {
+      const canvas = document.getElementById('particles-canvas');
+      const ctx = canvas.getContext('2d');
+      let particles = [];
+      let animationId;
+
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+
+      class Particle {
+        constructor() {
+          this.reset();
+        }
+        reset() {
+          this.x = Math.random() * canvas.width;
+          this.y = Math.random() * canvas.height;
+          this.size = Math.random() * 2 + 0.5;
+          this.speedX = (Math.random() - 0.5) * 0.4;
+          this.speedY = (Math.random() - 0.5) * 0.4;
+          this.opacity = Math.random() * 0.4 + 0.1;
+        }
+        update() {
+          this.x += this.speedX;
+          this.y += this.speedY;
+          if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+            this.reset();
+          }
+        }
+        draw() {
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(59, 130, 246, ${this.opacity})`;
+          ctx.fill();
+        }
+      }
+
+      function init() {
+        resize();
+        const count = Math.min(Math.floor((canvas.width * canvas.height) / 12000), 120);
+        particles = [];
+        for (let i = 0; i < count; i++) {
+          particles.push(new Particle());
+        }
+      }
+
+      function connectParticles() {
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 120) {
+              ctx.beginPath();
+              ctx.moveTo(particles[i].x, particles[i].y);
+              ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.strokeStyle = `rgba(59, 130, 246, ${0.06 * (1 - dist / 120)})`;
+              ctx.lineWidth = 0.5;
+              ctx.stroke();
+            }
+          }
+        }
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => { p.update(); p.draw(); });
+        connectParticles();
+        animationId = requestAnimationFrame(animate);
+      }
+
+      window.addEventListener('resize', () => {
+        cancelAnimationFrame(animationId);
+        init();
+        animate();
+      });
+
+      init();
+      animate();
+    })();
+
+    // ===== SCROLL REVEAL =====
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('.reveal, .timeline-item').forEach(el => {
+      revealObserver.observe(el);
+    });
+
+    // ===== NAV SCROLL EFFECTS =====
+    const navbar = document.getElementById('navbar');
+    const navProgress = document.getElementById('navProgress');
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    window.addEventListener('scroll', () => {
+      // Navbar shrink
+      navbar.classList.toggle('scrolled', window.scrollY > 50);
+
+      // Progress bar
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercent = (scrollTop / docHeight) * 100;
+      navProgress.style.width = scrollPercent + '%';
+
+      // Active section highlighting
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 120;
+        if (scrollTop >= sectionTop) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('data-section') === current) {
+          link.classList.add('active');
+        }
+      });
+    });
+
+    // ===== HAMBURGER MENU =====
+    const hamburger = document.getElementById('hamburger');
+    const navLinksEl = document.getElementById('navLinks');
+
+    hamburger.addEventListener('click', () => {
+      navLinksEl.classList.toggle('open');
+    });
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        navLinksEl.classList.remove('open');
+      });
+    });
+
+    // ===== COMPARISON TOGGLE =====
+    const toggleBtns = document.querySelectorAll('.toggle-btn');
+    const cardsView = document.getElementById('cardsView');
+    const tableView = document.getElementById('tableView');
+
+    toggleBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        toggleBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const view = btn.getAttribute('data-view');
+        if (view === 'cards') {
+          cardsView.style.display = 'grid';
+          tableView.style.display = 'none';
+        } else {
+          cardsView.style.display = 'none';
+          tableView.style.display = 'table';
+        }
+      });
+    });
+
+    // ===== KEYBOARD NAVIGATION =====
+    const sectionIds = ['hero', 'sources', 'federales', 'investigation', 'enquete', 'cas'];
+    let currentSectionIndex = 0;
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+        e.preventDefault();
+        currentSectionIndex = Math.min(currentSectionIndex + 1, sectionIds.length - 1);
+        document.getElementById(sectionIds[currentSectionIndex]).scrollIntoView({ behavior: 'smooth' });
+      } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+        e.preventDefault();
+        currentSectionIndex = Math.max(currentSectionIndex - 1, 0);
+        document.getElementById(sectionIds[currentSectionIndex]).scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+
+    // Update current section index on scroll
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY + window.innerHeight / 3;
+      for (let i = sectionIds.length - 1; i >= 0; i--) {
+        const section = document.getElementById(sectionIds[i]);
+        if (section && scrollTop >= section.offsetTop) {
+          currentSectionIndex = i;
+          break;
+        }
+      }
+    });
+
+    // ===== SMOOTH ANCHOR SCROLL =====
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
