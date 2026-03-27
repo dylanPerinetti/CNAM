@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Réglementation Aéronautique — Agences Fédérales & Investigation</title>
+  <title>Réglementation Aéronautique - Agences Fédérales & Investigation</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap');
 
@@ -140,6 +140,39 @@
       background: var(--text-primary);
       border-radius: 2px;
       transition: all 0.3s ease;
+    }
+
+    /* ===== FULLSCREEN BUTTON ===== */
+    .fullscreen-btn {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 200;
+      width: 48px; height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .fullscreen-btn:hover {
+      background: var(--accent-blue);
+      border-color: var(--accent-blue);
+      color: white;
+      transform: scale(1.1);
+      box-shadow: 0 4px 25px rgba(59, 130, 246, 0.4);
+    }
+
+    .fullscreen-btn svg {
+      width: 20px; height: 20px;
+      pointer-events: none;
     }
 
     /* ===== HERO SECTION (SLIDE 1) ===== */
@@ -1073,6 +1106,22 @@
 </head>
 <body>
 
+  <!-- Fullscreen Button -->
+  <button class="fullscreen-btn" id="fullscreenBtn" title="Plein écran">
+    <svg id="fsIconExpand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="15 3 21 3 21 9"></polyline>
+      <polyline points="9 21 3 21 3 15"></polyline>
+      <line x1="21" y1="3" x2="14" y2="10"></line>
+      <line x1="3" y1="21" x2="10" y2="14"></line>
+    </svg>
+    <svg id="fsIconCompress" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+      <polyline points="4 14 10 14 10 20"></polyline>
+      <polyline points="20 10 14 10 14 4"></polyline>
+      <line x1="14" y1="10" x2="21" y2="3"></line>
+      <line x1="3" y1="21" x2="10" y2="14"></line>
+    </svg>
+  </button>
+
   <!-- Particles Background -->
   <canvas id="particles-canvas"></canvas>
 
@@ -1101,7 +1150,7 @@
   <!-- SLIDE 1 — Hero -->
   <section class="hero" id="hero">
     <div class="hero-content">
-      <div class="hero-badge">CNAM Ingénieur2000 — Réglementation Aéronautique</div>
+      <div class="hero-badge">CNAM Ingénieur2000 - Réglementation Aéronautique</div>
       <h1>
         Agences Fédérales &<br>
         <span class="gradient-text">Agences d'Investigation</span><br>
@@ -1149,7 +1198,7 @@
         <div class="source-card reveal reveal-delay-3">
           <div class="source-icon">📜</div>
           <span class="source-type convention">Convention internationale</span>
-          <h3>Convention OACI — Annexe 13</h3>
+          <h3>Convention OACI - Annexe 13</h3>
           <p>Normes et pratiques recommandées internationales pour les enquêtes sur les accidents et incidents d'aviation.</p>
         </div>
         <div class="source-card reveal reveal-delay-4">
@@ -1454,8 +1503,8 @@
 
       <div class="case-study reveal">
         <div class="case-badge">🔴 Accident majeur</div>
-        <h3>Vol Air France 447 — Rio-Paris</h3>
-        <p class="case-subtitle">1ᵉʳ juin 2009 — Océan Atlantique</p>
+        <h3>Vol Air France 447 - Rio-Paris</h3>
+        <p class="case-subtitle">1ᵉʳ juin 2009 - Océan Atlantique</p>
 
         <div class="case-details">
           <div class="case-detail">
@@ -1481,9 +1530,26 @@
     </div>
   </section>
 
+  <!-- QR Code Section -->
+  <section class="section" id="qrcode" style="padding: 4rem 2rem;">
+    <div class="section-container" style="text-align: center;">
+      <div class="reveal">
+        <div class="section-number">Accès en ligne</div>
+        <h2 class="section-title">Scannez pour accéder au site</h2>
+        <p class="section-desc" style="margin-bottom: 2.5rem;">Retrouvez cette présentation en ligne sur <strong style="color: var(--accent-blue);">gp6.irazia.fr</strong></p>
+      </div>
+      <div class="reveal" style="display: inline-block; padding: 2rem; background: white; border-radius: 20px; box-shadow: 0 8px 40px rgba(59, 130, 246, 0.2);">
+        <img src="qrcode.svg" alt="QR Code vers gp6.irazia.fr" style="width: 200px; height: 200px; display: block;">
+      </div>
+      <p class="reveal" style="margin-top: 1.5rem; font-size: 0.9rem; color: var(--text-secondary);">
+        <a href="https://gp6.irazia.fr/" target="_blank" rel="noopener noreferrer" style="color: var(--accent-blue); text-decoration: none; font-weight: 600;">https://gp6.irazia.fr/</a>
+      </p>
+    </div>
+  </section>
+
   <!-- Footer -->
   <footer class="footer">
-    <p class="footer-brand">Réglementation Aéronautique — CNAM Ingénieur2000</p>
+    <p class="footer-brand">Réglementation Aéronautique - CNAM Ingénieur2000</p>
     <p>Agences fédérales et agences d'investigation en aéronautique</p>
   </footer>
 
@@ -1690,6 +1756,26 @@
           target.scrollIntoView({ behavior: 'smooth' });
         }
       });
+    });
+
+    // ===== FULLSCREEN =====
+    const fsBtn = document.getElementById('fullscreenBtn');
+    const fsExpand = document.getElementById('fsIconExpand');
+    const fsCompress = document.getElementById('fsIconCompress');
+
+    fsBtn.addEventListener('click', () => {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    });
+
+    document.addEventListener('fullscreenchange', () => {
+      const isFs = !!document.fullscreenElement;
+      fsExpand.style.display = isFs ? 'none' : 'block';
+      fsCompress.style.display = isFs ? 'block' : 'none';
+      fsBtn.title = isFs ? 'Quitter plein écran' : 'Plein écran';
     });
   </script>
 </body>
