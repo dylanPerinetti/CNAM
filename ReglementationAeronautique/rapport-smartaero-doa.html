@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SmartAero Composites — Structures Composites Intelligentes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --white: #ffffff;
+      --off-white: #f8fafc;
+      --grey-50: #f1f5f9;
+      --grey-100: #e2e8f0;
+      --grey-200: #cbd5e1;
+      --grey-300: #94a3b8;
+      --grey-400: #64748b;
+      --grey-500: #475569;
+      --grey-600: #334155;
+      --grey-700: #1e293b;
+      --grey-800: #0f172a;
+      --blue-50: #eff6ff;
+      --blue-100: #dbeafe;
+      --blue-500: #3b82f6;
+      --blue-600: #2563eb;
+      --blue-700: #1d4ed8;
+      --blue-800: #1e3a5f;
+      --blue-900: #0c1f3d;
+      --cyan-400: #22d3ee;
+      --cyan-500: #06b6d4;
+      --emerald-400: #34d399;
+      --emerald-500: #10b981;
+      --amber-400: #fbbf24;
+      --amber-500: #f59e0b;
+      --radius: 12px;
+      --radius-lg: 20px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+      --shadow: 0 4px 20px rgba(0,0,0,0.06);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,0.08);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--grey-700);
+      background: var(--white);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== NAV ===== */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 1rem 0;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid transparent;
+      transition: all 0.3s ease;
+    }
+    .navbar.scrolled {
+      padding: 0.6rem 0;
+      border-bottom-color: var(--grey-100);
+      box-shadow: var(--shadow-sm);
+    }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 2rem;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .logo {
+      display: flex; align-items: center; gap: 0.6rem;
+      text-decoration: none; color: var(--grey-800);
+      font-weight: 800; font-size: 1.15rem;
+    }
+    .logo-icon {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, var(--blue-600), var(--cyan-500));
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-weight: 800; font-size: 0.75rem;
+    }
+    .nav-menu { display: flex; gap: 0.25rem; list-style: none; }
+    .nav-menu a {
+      padding: 0.5rem 0.9rem;
+      text-decoration: none;
+      color: var(--grey-500);
+      font-size: 0.88rem; font-weight: 500;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+    .nav-menu a:hover, .nav-menu a.active {
+      color: var(--blue-600); background: var(--blue-50);
+    }
+    .nav-cta {
+      padding: 0.55rem 1.25rem !important;
+      background: var(--blue-600) !important;
+      color: white !important;
+      border-radius: 8px !important;
+      font-weight: 600 !important;
+      transition: all 0.2s !important;
+    }
+    .nav-cta:hover {
+      background: var(--blue-700) !important;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(37,99,235,0.3) !important;
+    }
+    .hamburger {
+      display: none; cursor: pointer; padding: 4px;
+      flex-direction: column; gap: 5px;
+    }
+    .hamburger span {
+      width: 22px; height: 2px; background: var(--grey-600);
+      border-radius: 2px; transition: all 0.3s;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      padding: 10rem 2rem 6rem;
+      background: linear-gradient(160deg, var(--blue-900) 0%, var(--blue-800) 50%, #153458 100%);
+      color: white; position: relative; overflow: hidden;
+    }
+    .hero::after {
+      content: ''; position: absolute; top: 0; right: 0;
+      width: 60%; height: 100%;
+      background: url("data:image/svg+xml,%3Csvg width='600' height='600' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%2322d3ee' stop-opacity='0.07'/%3E%3Cstop offset='100%25' stop-color='%233b82f6' stop-opacity='0.03'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='300' cy='300' r='250' fill='none' stroke='url(%23g)' stroke-width='1'/%3E%3Ccircle cx='300' cy='300' r='180' fill='none' stroke='url(%23g)' stroke-width='1'/%3E%3Ccircle cx='300' cy='300' r='110' fill='none' stroke='url(%23g)' stroke-width='1'/%3E%3C/svg%3E") center/contain no-repeat;
+      opacity: 0.6; pointer-events: none;
+    }
+    .hero-inner {
+      max-width: 1200px; margin: 0 auto; position: relative; z-index: 1;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.35rem 0.9rem; background: rgba(34,211,238,0.12);
+      border: 1px solid rgba(34,211,238,0.25);
+      border-radius: 50px; font-size: 0.78rem; font-weight: 600;
+      color: var(--cyan-400); margin-bottom: 1.5rem;
+    }
+    .hero-badge::before {
+      content: ''; width: 6px; height: 6px; background: var(--cyan-400);
+      border-radius: 50%; animation: blink 2s infinite;
+    }
+    @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+    .hero h1 {
+      font-size: clamp(2.4rem, 4.5vw, 3.6rem);
+      font-weight: 800; line-height: 1.1; margin-bottom: 1.5rem;
+    }
+    .hero h1 span { color: var(--cyan-400); }
+    .hero-text {
+      font-size: 1.1rem; color: rgba(255,255,255,0.7);
+      line-height: 1.7; margin-bottom: 2rem; max-width: 520px;
+    }
+    .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn {
+      padding: 0.75rem 1.75rem; border-radius: 10px;
+      font-size: 0.95rem; font-weight: 600; text-decoration: none;
+      cursor: pointer; transition: all 0.25s; border: none;
+      font-family: inherit; display: inline-flex; align-items: center; gap: 0.5rem;
+    }
+    .btn-primary {
+      background: var(--blue-500); color: white;
+    }
+    .btn-primary:hover { background: var(--blue-600); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(59,130,246,0.35); }
+    .btn-outline {
+      background: transparent; color: white;
+      border: 1px solid rgba(255,255,255,0.25);
+    }
+    .btn-outline:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.4); }
+
+    .hero-stats {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+    }
+    .stat-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-lg); padding: 1.75rem;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s;
+    }
+    .stat-card:hover { background: rgba(255,255,255,0.1); transform: translateY(-4px); }
+    .stat-value {
+      font-size: 2rem; font-weight: 800; margin-bottom: 0.3rem;
+      background: linear-gradient(135deg, white, var(--cyan-400));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .stat-label { font-size: 0.82rem; color: rgba(255,255,255,0.5); font-weight: 500; }
+
+    /* ===== SECTION LAYOUT ===== */
+    .section { padding: 6rem 2rem; }
+    .section-grey { background: var(--grey-50); }
+    .section-blue { background: var(--blue-900); color: white; }
+    .container { max-width: 1200px; margin: 0 auto; }
+    .section-tag {
+      display: inline-block;
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.12em; color: var(--blue-600); margin-bottom: 0.75rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .section-blue .section-tag { color: var(--cyan-400); }
+    .section-heading {
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      font-weight: 800; line-height: 1.15; margin-bottom: 1rem;
+      color: var(--grey-800);
+    }
+    .section-blue .section-heading { color: white; }
+    .section-sub {
+      font-size: 1.05rem; color: var(--grey-400);
+      max-width: 600px; line-height: 1.7;
+    }
+    .section-blue .section-sub { color: rgba(255,255,255,0.6); }
+    .section-header { margin-bottom: 3.5rem; }
+    .section-header.center { text-align: center; }
+    .section-header.center .section-sub { margin: 0 auto; }
+
+    /* ===== ABOUT GRID ===== */
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+    }
+    .about-text p {
+      font-size: 1rem; color: var(--grey-500); line-height: 1.8;
+      margin-bottom: 1.25rem; text-align: justify;
+    }
+    .about-features {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem;
+    }
+    .about-feature {
+      display: flex; align-items: flex-start; gap: 0.75rem;
+    }
+    .about-feature-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; flex-shrink: 0;
+    }
+    .about-feature-icon.blue { background: var(--blue-50); }
+    .about-feature-icon.cyan { background: rgba(6,182,212,0.1); }
+    .about-feature-icon.green { background: rgba(16,185,129,0.1); }
+    .about-feature-icon.amber { background: rgba(245,158,11,0.1); }
+    .about-feature p { font-size: 0.85rem; color: var(--grey-500); font-weight: 500; }
+    .about-image {
+      background: linear-gradient(135deg, var(--blue-50), var(--grey-50));
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--grey-100);
+      padding: 3rem; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      min-height: 420px; position: relative; overflow: hidden;
+    }
+    .about-image-badge {
+      position: absolute; top: 1.5rem; left: 1.5rem;
+      padding: 0.3rem 0.75rem; background: white; border-radius: 8px;
+      font-size: 0.72rem; font-weight: 700; color: var(--blue-600);
+      box-shadow: var(--shadow);
+      text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .composite-visual {
+      width: 200px; height: 200px; position: relative;
+    }
+    .composite-layer {
+      position: absolute; width: 100%; border-radius: 12px;
+      transition: all 0.4s ease;
+    }
+    .composite-layer:nth-child(1) { height: 160px; top: 0; left: 0; background: linear-gradient(135deg, #1e3a5f, #2563eb); opacity: 0.9; transform: perspective(600px) rotateX(25deg) rotateZ(-5deg); }
+    .composite-layer:nth-child(2) { height: 160px; top: 20px; left: 10px; background: linear-gradient(135deg, #06b6d4, #22d3ee); opacity: 0.7; transform: perspective(600px) rotateX(25deg) rotateZ(-5deg); }
+    .composite-layer:nth-child(3) { height: 160px; top: 40px; left: 20px; background: linear-gradient(135deg, #10b981, #34d399); opacity: 0.5; transform: perspective(600px) rotateX(25deg) rotateZ(-5deg); }
+    .about-image:hover .composite-layer:nth-child(1) { top: -10px; }
+    .about-image:hover .composite-layer:nth-child(3) { top: 60px; }
+    .about-image-caption {
+      margin-top: 4rem; font-size: 0.82rem; color: var(--grey-400);
+      text-align: center; font-weight: 500;
+    }
+
+    /* ===== PROJECT / INNOVATION ===== */
+    .innovation-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+    }
+    .innovation-card {
+      background: white; border: 1px solid var(--grey-100);
+      border-radius: var(--radius-lg); padding: 2rem;
+      transition: all 0.3s ease; position: relative; overflow: hidden;
+    }
+    .innovation-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--blue-100);
+    }
+    .innovation-card::before {
+      content: ''; position: absolute; top: 0; left: 0;
+      width: 100%; height: 3px; border-radius: 3px 3px 0 0;
+      transition: opacity 0.3s; opacity: 0;
+    }
+    .innovation-card:hover::before { opacity: 1; }
+    .innovation-card:nth-child(1)::before { background: linear-gradient(90deg, var(--blue-500), var(--cyan-500)); }
+    .innovation-card:nth-child(2)::before { background: linear-gradient(90deg, var(--emerald-500), var(--cyan-500)); }
+    .innovation-card:nth-child(3)::before { background: linear-gradient(90deg, var(--amber-500), var(--amber-400)); }
+    .innovation-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; margin-bottom: 1.25rem;
+    }
+    .innovation-icon.blue { background: var(--blue-50); }
+    .innovation-icon.green { background: rgba(16,185,129,0.1); }
+    .innovation-icon.amber { background: rgba(245,158,11,0.1); }
+    .innovation-card h3 {
+      font-size: 1.1rem; font-weight: 700; color: var(--grey-800);
+      margin-bottom: 0.6rem;
+    }
+    .innovation-card p {
+      font-size: 0.9rem; color: var(--grey-400); line-height: 1.7;
+    }
+
+    /* ===== DOA PROCESS ===== */
+    .process-track {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+    }
+    .process-step {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-lg); padding: 2rem;
+      transition: all 0.3s; position: relative;
+    }
+    .process-step:hover {
+      background: rgba(255,255,255,0.08);
+      transform: translateY(-4px);
+      border-color: rgba(34,211,238,0.2);
+    }
+    .step-number {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 32px; height: 32px;
+      background: rgba(34,211,238,0.15); color: var(--cyan-400);
+      border-radius: 8px; font-size: 0.85rem; font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      margin-bottom: 1rem;
+    }
+    .step-delay {
+      display: inline-block; margin-left: 0.5rem;
+      font-size: 0.7rem; color: rgba(255,255,255,0.35);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .process-step h4 {
+      font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem;
+    }
+    .process-step p {
+      font-size: 0.85rem; color: rgba(255,255,255,0.5); line-height: 1.7;
+    }
+    .process-footer {
+      margin-top: 2.5rem;
+      padding: 1.5rem 2rem;
+      background: rgba(34,211,238,0.06);
+      border: 1px solid rgba(34,211,238,0.12);
+      border-radius: var(--radius);
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .process-footer p {
+      font-size: 0.88rem; color: rgba(255,255,255,0.6); line-height: 1.6;
+    }
+    .process-footer strong { color: white; }
+
+    /* ===== NORMS ===== */
+    .norms-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;
+    }
+    .norm-card {
+      background: white; border: 1px solid var(--grey-100);
+      border-radius: var(--radius-lg); padding: 2rem;
+      transition: all 0.3s; display: flex; gap: 1.25rem;
+    }
+    .norm-card:hover {
+      transform: translateY(-4px); box-shadow: var(--shadow-lg);
+      border-color: var(--blue-100);
+    }
+    .norm-marker {
+      width: 4px; border-radius: 4px; flex-shrink: 0;
+    }
+    .norm-marker.blue { background: var(--blue-500); }
+    .norm-marker.amber { background: var(--amber-500); }
+    .norm-marker.green { background: var(--emerald-500); }
+    .norm-marker.cyan { background: var(--cyan-500); }
+    .norm-ref {
+      font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em; margin-bottom: 0.4rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .norm-ref.blue { color: var(--blue-600); }
+    .norm-ref.amber { color: var(--amber-500); }
+    .norm-ref.green { color: var(--emerald-500); }
+    .norm-ref.cyan { color: var(--cyan-500); }
+    .norm-card h4 {
+      font-size: 1rem; font-weight: 700; color: var(--grey-800);
+      margin-bottom: 0.5rem;
+    }
+    .norm-card p, .norm-card li {
+      font-size: 0.85rem; color: var(--grey-400); line-height: 1.7;
+    }
+    .norm-card ul { list-style: none; margin-top: 0.5rem; }
+    .norm-card ul li {
+      padding: 0.25rem 0; display: flex; align-items: flex-start; gap: 0.5rem;
+    }
+    .norm-card ul li::before {
+      content: '→'; color: var(--blue-500); font-weight: 700; flex-shrink: 0;
+    }
+
+    /* ===== MEANS TABLE ===== */
+    .means-wrap {
+      background: white; border: 1px solid var(--grey-100);
+      border-radius: var(--radius-lg); overflow: hidden;
+    }
+    .means-table {
+      width: 100%; border-collapse: collapse; font-size: 0.88rem;
+    }
+    .means-table thead { background: var(--grey-50); }
+    .means-table th {
+      padding: 1rem 1.5rem; text-align: left;
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--grey-400);
+      border-bottom: 1px solid var(--grey-100);
+    }
+    .means-table td {
+      padding: 1rem 1.5rem; border-bottom: 1px solid var(--grey-50);
+      color: var(--grey-500); vertical-align: top; line-height: 1.6;
+    }
+    .means-table tr:last-child td { border-bottom: none; }
+    .means-table tr:hover td { background: var(--blue-50); }
+    .means-table td:first-child { font-weight: 600; color: var(--grey-700); white-space: nowrap; }
+    .tag {
+      display: inline-block; padding: 0.15rem 0.5rem;
+      border-radius: 5px; font-size: 0.72rem; font-weight: 600;
+      margin: 0.1rem;
+    }
+    .tag-blue { background: var(--blue-50); color: var(--blue-600); }
+    .tag-green { background: rgba(16,185,129,0.1); color: var(--emerald-500); }
+    .tag-purple { background: rgba(139,92,246,0.1); color: #8b5cf6; }
+
+    /* ===== CTA BANNER ===== */
+    .cta-banner {
+      padding: 5rem 2rem;
+      background: linear-gradient(135deg, var(--blue-600), var(--blue-700));
+      text-align: center; color: white;
+    }
+    .cta-banner h2 {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 800; margin-bottom: 1rem;
+    }
+    .cta-banner p {
+      font-size: 1.05rem; color: rgba(255,255,255,0.7);
+      max-width: 600px; margin: 0 auto 2rem; line-height: 1.7;
+    }
+    .btn-white {
+      background: white; color: var(--blue-700);
+    }
+    .btn-white:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.15); transform: translateY(-2px); }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      padding: 4rem 2rem 2rem;
+      background: var(--grey-800); color: rgba(255,255,255,0.5);
+    }
+    .footer-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem;
+    }
+    .footer-brand p {
+      font-size: 0.85rem; line-height: 1.7; margin-top: 1rem; max-width: 300px;
+    }
+    .footer h5 {
+      font-size: 0.78rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: rgba(255,255,255,0.8); margin-bottom: 1rem;
+    }
+    .footer ul { list-style: none; }
+    .footer ul li { margin-bottom: 0.5rem; }
+    .footer ul a {
+      color: rgba(255,255,255,0.5); text-decoration: none;
+      font-size: 0.85rem; transition: color 0.2s;
+    }
+    .footer ul a:hover { color: white; }
+    .footer-bottom {
+      max-width: 1200px; margin: 3rem auto 0; padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.8rem; flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-ia {
+      max-width: 1200px; margin: 2rem auto 0;
+      padding: 1.25rem 1.5rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 10px;
+      font-size: 0.78rem; color: rgba(255,255,255,0.35); line-height: 1.6;
+    }
+    .footer-ia strong { color: rgba(255,255,255,0.55); }
+
+    /* ===== ANIMATIONS ===== */
+    .reveal {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.25s; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .hero-inner { grid-template-columns: 1fr; text-align: center; }
+      .hero-text { margin: 0 auto 2rem; }
+      .hero-buttons { justify-content: center; }
+      .hero-stats { max-width: 500px; margin: 3rem auto 0; }
+      .about-grid { grid-template-columns: 1fr; }
+      .process-track { grid-template-columns: 1fr 1fr; }
+      .footer-inner { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .nav-menu { display: none; position: absolute; top: 100%; left: 0; right: 0;
+        background: white; flex-direction: column; padding: 1rem; gap: 0;
+        border-bottom: 1px solid var(--grey-100); box-shadow: var(--shadow); }
+      .nav-menu.open { display: flex; }
+      .hamburger { display: flex; }
+      .hero { padding: 8rem 2rem 4rem; }
+      .hero-stats { grid-template-columns: 1fr 1fr; }
+      .innovation-grid { grid-template-columns: 1fr; }
+      .process-track { grid-template-columns: 1fr; }
+      .norms-grid { grid-template-columns: 1fr; }
+      .footer-inner { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+    }
+    @media (max-width: 480px) {
+      .hero-stats { grid-template-columns: 1fr; }
+      .about-features { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="#" class="logo">
+        <div class="logo-icon">SA</div>
+        SmartAero
+      </a>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="#about" data-section="about">À propos</a></li>
+        <li><a href="#innovation" data-section="innovation">Innovation</a></li>
+        <li><a href="#certification" data-section="certification">Certification</a></li>
+        <li><a href="#normes" data-section="normes">Normes</a></li>
+        <li><a href="#moyens" data-section="moyens">Ressources</a></li>
+        <li><a href="#contact" class="nav-cta">Nous contacter</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge">Agrément DOA en cours — Part 21 Sous-partie J</div>
+        <h1>Structures composites <span>intelligentes</span> pour l'aéronautique</h1>
+        <p class="hero-text">
+          SmartAero Composites conçoit des panneaux de fuselage CFRP intégrant des capteurs piézoélectriques pour la surveillance autonome de l'intégrité structurelle et la récupération d'énergie embarquée.
+        </p>
+        <div class="hero-buttons">
+          <a href="#innovation" class="btn btn-primary">Découvrir le projet →</a>
+          <a href="#certification" class="btn btn-outline">Notre démarche DOA</a>
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-card">
+          <div class="stat-value">2023</div>
+          <div class="stat-label">Année de création — Toulouse</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">~25</div>
+          <div class="stat-label">Ingénieurs spécialisés</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">CS-25</div>
+          <div class="stat-label">Catégorie d'aéronefs visée</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">DOA</div>
+          <div class="stat-label">Agrément Part 21.J en cours</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== À PROPOS ===== -->
+  <section class="section" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-text reveal">
+          <div class="section-tag">À propos</div>
+          <h2 class="section-heading">Bureau d'études en matériaux composites avancés</h2>
+          <p>
+            SmartAero Composites SAS est un bureau d'études fondé en 2023 à Toulouse (Haute-Garonne), au cœur du bassin aéronautique européen. La société emploie environ 25 ingénieurs spécialisés dans les matériaux composites avancés, les capteurs embarqués et la certification aéronautique.
+          </p>
+          <p>
+            Son activité principale porte sur la conception de structures composites intégrant des fonctions intelligentes : surveillance de l'intégrité structurelle, récupération d'énergie vibratoire et optimisation de la maintenance prédictive. L'entreprise s'inscrit dans l'écosystème des PME innovantes gravitant autour des donneurs d'ordres Airbus et Safran.
+          </p>
+          <p>
+            Son objectif stratégique est d'obtenir un agrément DOA afin de pouvoir approuver ses propres données de conception et proposer directement des modifications ou des réparations certifiées aux avionneurs et exploitants.
+          </p>
+          <div class="about-features">
+            <div class="about-feature">
+              <div class="about-feature-icon blue">🔬</div>
+              <p>Composites avancés CFRP</p>
+            </div>
+            <div class="about-feature">
+              <div class="about-feature-icon cyan">📡</div>
+              <p>Capteurs piézoélectriques</p>
+            </div>
+            <div class="about-feature">
+              <div class="about-feature-icon green">✅</div>
+              <p>Certification EASA</p>
+            </div>
+            <div class="about-feature">
+              <div class="about-feature-icon amber">⚡</div>
+              <p>Récupération d'énergie</p>
+            </div>
+          </div>
+        </div>
+        <div class="about-image reveal reveal-delay-2">
+          <div class="about-image-badge">Composite CFRP</div>
+          <div class="composite-visual">
+            <div class="composite-layer"></div>
+            <div class="composite-layer"></div>
+            <div class="composite-layer"></div>
+          </div>
+          <p class="about-image-caption">Empilement stratifié avec capteurs piézoélectriques co-laminés</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== INNOVATION / PROJET SHM ===== -->
+  <section class="section section-grey" id="innovation">
+    <div class="container">
+      <div class="section-header center reveal">
+        <div class="section-tag">Innovation</div>
+        <h2 class="section-heading">Panneau de fuselage SHM piézoélectrique</h2>
+        <p class="section-sub">Un panneau composite intelligent qui surveille sa propre intégrité structurelle et génère l'énergie nécessaire à son fonctionnement autonome.</p>
+      </div>
+
+      <div class="innovation-grid">
+        <div class="innovation-card reveal">
+          <div class="innovation-icon blue">📡</div>
+          <h3>Structural Health Monitoring</h3>
+          <p>Émission et réception d'ondes de Lamb permettant la détection de délaminages, de fissures et d'impacts à peine visibles (<em>Barely Visible Impact Damage</em> — BVID). Remplacement des inspections visuelles périodiques par un monitoring continu en service.</p>
+        </div>
+        <div class="innovation-card reveal reveal-delay-1">
+          <div class="innovation-icon green">⚡</div>
+          <h3>Récupération d'énergie</h3>
+          <p>Récupération de l'énergie vibratoire ambiante par effet piézoélectrique inverse, alimentant les capteurs de manière autonome. Suppression de la dépendance à un câblage externe dédié pour l'alimentation du système SHM embarqué.</p>
+        </div>
+        <div class="innovation-card reveal reveal-delay-2">
+          <div class="innovation-icon amber">🏭</div>
+          <h3>Intégration en fabrication</h3>
+          <p>Capteurs piézoélectriques intégrés directement dans l'empilement composite lors du co-laminage. Suppression des opérations de collage en surface (<em>retrofit</em>). Meilleure durabilité en environnement de fuselage pressurisé.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CERTIFICATION DOA ===== -->
+  <section class="section section-blue" id="certification">
+    <div class="container">
+      <div class="section-header center reveal">
+        <div class="section-tag">Certification</div>
+        <h2 class="section-heading">Procédure d'agrément DOA — Part 21, Sous-partie J</h2>
+        <p class="section-sub">L'agrément DOA (21.A.231 à 21.A.265) autorise SmartAero à concevoir et approuver ses propres données de conception pour les aéronefs CS-25. Condition préalable : un <em>Design Assurance System</em> conforme à la section 21.A.239.</p>
+      </div>
+
+      <div class="process-track">
+        <div class="process-step reveal">
+          <span class="step-number">01</span><span class="step-delay">Mois 1</span>
+          <h4>Pré-engagement</h4>
+          <p>Réunion préliminaire avec la DGAC, autorité nationale agissant pour le compte de l'EASA. Présentation du projet, du périmètre envisagé et du calendrier.</p>
+        </div>
+        <div class="process-step reveal reveal-delay-1">
+          <span class="step-number">02</span><span class="step-delay">Mois 2 — 6</span>
+          <h4>Constitution du dossier</h4>
+          <p>Rédaction du <em>Design Organisation Handbook</em> (DOE/DOH). Dépôt du formulaire EASA Form 50 auprès de la DGAC/OSAC.</p>
+        </div>
+        <div class="process-step reveal reveal-delay-2">
+          <span class="step-number">03</span><span class="step-delay">Mois 7 — 9</span>
+          <h4>Audit documentaire</h4>
+          <p>Examen du DOE par la DGAC. Vérification de conformité aux sections 21.A.239 à 21.A.257. Émission de <em>findings</em> le cas échéant.</p>
+        </div>
+        <div class="process-step reveal">
+          <span class="step-number">04</span><span class="step-delay">Mois 10 — 12</span>
+          <h4>Audit sur site</h4>
+          <p>Inspection des locaux, vérification des compétences du personnel (21.A.245), des moyens matériels et logiciels, fonctionnement effectif du DAS.</p>
+        </div>
+        <div class="process-step reveal reveal-delay-1">
+          <span class="step-number">05</span><span class="step-delay">Mois 12 — 15</span>
+          <h4>Actions correctives</h4>
+          <p>Levée des <em>findings</em> : preuves de mise en conformité pour chaque constat. Validation par la DGAC de chaque action corrective.</p>
+        </div>
+        <div class="process-step reveal reveal-delay-2">
+          <span class="step-number">06</span><span class="step-delay">Mois 15 — 18</span>
+          <h4>Délivrance</h4>
+          <p>Émission de l'agrément DOA (EASA Form 53). Le <em>Terms of Approval</em> précise les privilèges (21.A.263). Surveillance continue (21.A.247).</p>
+        </div>
+      </div>
+
+      <div class="process-footer reveal">
+        <span style="font-size: 1.5rem;">⏱️</span>
+        <p><strong>Délai global : 12 à 24 mois</strong> selon la complexité du périmètre et la maturité de l'organisme. La surveillance continue est assurée par la DGAC via des audits périodiques annuels.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== NORMES ===== -->
+  <section class="section" id="normes">
+    <div class="container">
+      <div class="section-header center reveal">
+        <div class="section-tag">Réglementation</div>
+        <h2 class="section-heading">Normes et spécifications applicables</h2>
+        <p class="section-sub">Le cadre réglementaire encadrant la certification du panneau SHM piézoélectrique pour aéronefs de transport CS-25.</p>
+      </div>
+
+      <div class="norms-grid">
+        <div class="norm-card reveal">
+          <div class="norm-marker blue"></div>
+          <div>
+            <div class="norm-ref blue">CS-25 — Large Aeroplanes</div>
+            <h4>Certification Specifications</h4>
+            <ul>
+              <li><strong>CS-25.571</strong> — Damage Tolerance &amp; Fatigue Evaluation : tolérance aux dommages, qualification du SHM comme moyen de détection</li>
+              <li><strong>CS-25.603</strong> — Materials : qualification composites (B-basis/A-basis), effets environnementaux hot/wet</li>
+              <li><strong>CS-25.613</strong> — Material Strength Properties : valeurs de conception par essais statistiques</li>
+            </ul>
+          </div>
+        </div>
+        <div class="norm-card reveal reveal-delay-1">
+          <div class="norm-marker amber"></div>
+          <div>
+            <div class="norm-ref amber">Special Conditions EASA</div>
+            <h4>Exigences SHM embarqué (21.A.16B)</h4>
+            <p>En l'absence de spécifications dédiées aux systèmes SHM embarqués, l'EASA émet des Special Conditions couvrant la fiabilité du système de détection, les seuils de détectabilité minimaux, la tolérance aux pannes et l'intégration dans le programme de maintenance.</p>
+          </div>
+        </div>
+        <div class="norm-card reveal">
+          <div class="norm-marker green"></div>
+          <div>
+            <div class="norm-ref green">DO-160G / ED-14G</div>
+            <h4>Environmental Conditions &amp; Test Procedures</h4>
+            <ul>
+              <li>Vibrations (section 8) et chocs (section 7)</li>
+              <li>Température (section 4) et humidité (section 6)</li>
+              <li>Altitude (section 4.6)</li>
+              <li>Susceptibilité EMI (sections 19 à 22)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="norm-card reveal reveal-delay-1">
+          <div class="norm-marker cyan"></div>
+          <div>
+            <div class="norm-ref cyan">AMC 20-29 &amp; ARP 6461</div>
+            <h4>Composite Aircraft Structure &amp; SHM Guidelines</h4>
+            <p>AMC 20-29 : approche <em>building block</em>, variabilité des propriétés mécaniques, gestion des réparations et surveillance en service. ARP 6461 (SAE) : lignes directrices pour le développement de systèmes SHM aéronautiques.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MOYENS / RESSOURCES ===== -->
+  <section class="section section-grey" id="moyens">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-tag">Ressources</div>
+        <h2 class="section-heading">Moyens mis en œuvre</h2>
+        <p class="section-sub">Livrables, réponses attendues et institutions consultées pour chaque étape de la procédure DOA.</p>
+      </div>
+
+      <div class="means-wrap reveal">
+        <table class="means-table">
+          <thead>
+            <tr>
+              <th>Étape</th>
+              <th>Livrables / Réponses attendues</th>
+              <th>Institutions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1. Pré-engagement</td>
+              <td>Lettre d'intention, présentation du périmètre DOA, organigramme projet</td>
+              <td><span class="tag tag-blue">DGAC</span></td>
+            </tr>
+            <tr>
+              <td>2. Dossier</td>
+              <td>DOE/DOH complet, EASA Form 50, matrice de conformité 21.A.239, procédures DAS</td>
+              <td><span class="tag tag-blue">DGAC</span> <span class="tag tag-green">OSAC</span></td>
+            </tr>
+            <tr>
+              <td>3. Audit doc.</td>
+              <td>Réponses aux <em>findings</em> documentaires, révisions du DOE, couverture du DAS</td>
+              <td><span class="tag tag-blue">DGAC</span></td>
+            </tr>
+            <tr>
+              <td>4. Audit site</td>
+              <td>Démonstration compétences, outils de conception (FEM, essais), fonctionnement DAS</td>
+              <td><span class="tag tag-blue">DGAC</span> <span class="tag tag-purple">EASA</span></td>
+            </tr>
+            <tr>
+              <td>5. Corrections</td>
+              <td>Plans d'action correctifs, preuves de clôture, mise à jour du DOE</td>
+              <td><span class="tag tag-blue">DGAC</span></td>
+            </tr>
+            <tr>
+              <td>6. Délivrance</td>
+              <td>Réception EASA Form 53, publication des <em>Terms of Approval</em></td>
+              <td><span class="tag tag-blue">DGAC</span> <span class="tag tag-purple">EASA</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="reveal" style="margin-top: 1.5rem; padding: 1.25rem 1.5rem; background: white; border: 1px solid var(--grey-100); border-radius: 12px;">
+        <p style="font-size: 0.88rem; color: var(--grey-400); line-height: 1.7;">
+          En parallèle, SmartAero Composites engage les activités de certification du panneau SHM selon les CS-25, nécessitant la consultation de l'<span class="tag tag-purple">EASA</span> (Certification Directorate) pour l'établissement de <em>Special Conditions</em> et du <span class="tag tag-green">BEA</span> pour les retours d'expérience sur les modes de défaillance structuraux composites.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <section class="cta-banner" id="contact">
+    <h2>Prêt à collaborer avec SmartAero Composites ?</h2>
+    <p>Avionneurs, exploitants, organismes de certification — contactez-nous pour discuter de vos projets de structures composites intelligentes.</p>
+    <a href="mailto:contact@smartaero-composites.fr" class="btn btn-white">Nous contacter →</a>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="#" class="logo" style="margin-bottom: 0.5rem;">
+          <div class="logo-icon">SA</div>
+          SmartAero Composites
+        </a>
+        <p>Bureau d'études en matériaux composites intelligents pour l'aéronautique. Siège social : Toulouse, France.</p>
+      </div>
+      <div>
+        <h5>Navigation</h5>
+        <ul>
+          <li><a href="#about">À propos</a></li>
+          <li><a href="#innovation">Innovation</a></li>
+          <li><a href="#certification">Certification</a></li>
+          <li><a href="#normes">Normes</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Réglementation</h5>
+        <ul>
+          <li><a href="#">Part 21 — Sous-partie J</a></li>
+          <li><a href="#">CS-25</a></li>
+          <li><a href="#">DO-160G</a></li>
+          <li><a href="#">AMC 20-29</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Coordonnées</h5>
+        <ul>
+          <li><a href="#">Toulouse, France</a></li>
+          <li><a href="mailto:contact@smartaero-composites.fr">contact@smartaero-composites.fr</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-ia">
+      <strong>Annexe — Déclaration d'utilisation de l'IA :</strong> Le contenu de ce site a été rédigé avec l'assistance d'un outil d'intelligence artificielle (GitHub Copilot, modèle Claude). L'IA a été utilisée pour la structuration, la rédaction et la vérification des références réglementaires (Part 21, CS-25, DO-160G, AMC 20-29). L'ensemble du contenu a été vérifié, validé et adapté par l'auteur. La responsabilité du contenu final incombe intégralement à l'auteur.
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 SmartAero Composites SAS — Tous droits réservés</span>
+      <span>Rapport académique — CNAM Ingénieur Aéronautique &amp; Espace 2026 — Dylan Perinetti — Module Réglementation aéronautique — JP Partn'air × CNAM</span>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Navbar scroll
+    const nav = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+      // Active link
+      const scrollY = window.scrollY + 150;
+      document.querySelectorAll('section[id]').forEach(sec => {
+        const top = sec.offsetTop, h = sec.offsetHeight, id = sec.id;
+        const link = document.querySelector(`.nav-menu a[data-section="${id}"]`);
+        if (link) link.classList.toggle('active', scrollY >= top && scrollY < top + h);
+      });
+    });
+
+    // Hamburger
+    document.getElementById('hamburger').addEventListener('click', () => {
+      document.getElementById('navMenu').classList.toggle('open');
+    });
+    document.querySelectorAll('.nav-menu a').forEach(a => {
+      a.addEventListener('click', () => document.getElementById('navMenu').classList.remove('open'));
+    });
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', function(e) {
+        e.preventDefault();
+        const t = document.querySelector(this.getAttribute('href'));
+        if (t) t.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>

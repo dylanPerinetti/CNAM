@@ -1,0 +1,237 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{geometry}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage{lmodern}
+
+\geometry{margin=2.5cm}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+    citecolor=blue,
+    pdfauthor={Dylan PERINETTI},
+    pdftitle={Procédure d'obtention d'un agrément DOA (Part 21, Sous-partie J)},
+    pdfsubject={Réglementation aéronautique — CNAM 2026}
+}
+
+\title{
+    \vspace{-1cm}
+    \textbf{Procédure d'obtention d'un agrément DOA\\(Part 21, Sous-partie J)}\\[0.5cm]
+    \large Pour un panneau de fuselage composite\\à capteurs piézoélectriques SHM\\[1cm]
+    \normalsize Module : Réglementation aéronautique — JP Partn'air $\times$ CNAM\\
+    Diplôme d'ingénieur spécialité Aéronautique et Espace, CNAM 2026
+}
+\author{Dylan PERINETTI\\ \small\texttt{dylan.perinetti.auditeur@lecnam.net}}
+\date{Avril 2026}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+
+\newpage
+\tableofcontents
+\newpage
+
+% ============================================================
+\section{Introduction}
+% ============================================================
+
+Le transport aérien commercial repose sur un cadre réglementaire strict, défini en Europe par le règlement (UE) n°\,748/2012 et administré par l'Agence de l'Union européenne pour la sécurité aérienne (EASA). Toute entité souhaitant concevoir des pièces ou équipements destinés à un aéronef certifié doit obtenir un agrément d'organisme de conception, désigné \textit{Design Organisation Approval} (DOA), conformément à la Part~21, Sous-partie~J. Le présent rapport examine la démarche qu'une jeune entreprise innovante, SmartAero Composites SAS, doit entreprendre pour obtenir cet agrément dans le cadre du développement d'un panneau de fuselage en composite CFRP intégrant des capteurs piézoélectriques de surveillance d'intégrité structurelle (SHM). La procédure, les normes applicables et les moyens à mobiliser sont détaillés ci-après.
+
+% ============================================================
+\section{Présentation de SmartAero Composites SAS}
+% ============================================================
+
+SmartAero Composites SAS est un bureau d'études fondé en 2023 à Toulouse (Haute-Garonne), au c\oe ur du bassin aéronautique européen. La société emploie environ 25~ingénieurs spécialisés dans les matériaux composites avancés, les capteurs embarqués et la certification aéronautique. Son activité principale porte sur la conception de structures composites intégrant des fonctions intelligentes\,: surveillance de l'intégrité structurelle, récupération d'énergie vibratoire et optimisation de la maintenance prédictive.
+
+L'entreprise s'inscrit dans l'écosystème des PME innovantes gravitant autour des donneurs d'ordres Airbus et Safran. Son objectif stratégique est d'obtenir un agrément DOA afin de pouvoir approuver ses propres données de conception et proposer directement des modifications ou des réparations certifiées aux avionneurs et exploitants.
+
+% ============================================================
+\section{Agrément DOA : Part 21, Sous-partie J}
+% ============================================================
+
+\subsection{Nature et périmètre de l'agrément}
+
+L'agrément DOA, régi par la Part~21, Sous-partie~J (21.A.231 à 21.A.265), autorise un organisme à concevoir des produits, pièces ou équipements aéronautiques et à approuver les données de conception associées. Le périmètre (\textit{scope}) de l'agrément demandé par SmartAero Composites couvre la conception de composants structuraux en matériaux composites destinés aux aéronefs de catégorie CS-25 (avions de transport de grande capacité).
+
+\subsection{Conditions préalables}
+
+Conformément à la section~21.A.239, le demandeur doit démontrer qu'il dispose d'un \textit{Design Assurance System} (DAS), c'est-à-dire un système intégré garantissant la conformité de chaque conception aux spécifications de certification applicables. Ce système couvre l'ensemble des processus\,: gestion de configuration, analyses de sécurité, vérification indépendante, traitement des données de navigabilité et gestion des compétences.
+
+\subsection{Étapes de la procédure}
+
+La procédure d'obtention d'un agrément DOA se décompose en six étapes principales, résumées dans le tableau~\ref{tab:etapes-doa}.
+
+\begin{table}[H]
+\centering
+\caption{Étapes de la procédure d'obtention d'un agrément DOA}
+\label{tab:etapes-doa}
+\small
+\begin{tabularx}{\textwidth}{@{}c X c@{}}
+\toprule
+\textbf{Étape} & \textbf{Description} & \textbf{Délai} \\
+\midrule
+1 & \textbf{Pré-engagement.} Réunion préliminaire avec la DGAC, autorité nationale agissant pour le compte de l'EASA. Présentation du projet, du périmètre envisagé et du calendrier. & Mois 1 \\
+\addlinespace
+2 & \textbf{Constitution du dossier.} Rédaction du \textit{Design Organisation Handbook} (DOE/DOH), document décrivant l'organisation, les processus du DAS, les responsabilités et les moyens. Dépôt du formulaire EASA Form~50 auprès de la DGAC/OSAC. & Mois 2--6 \\
+\addlinespace
+3 & \textbf{Audit documentaire.} Examen du DOE par l'équipe de certification de la DGAC. Vérification de la conformité aux exigences des sections 21.A.239 à 21.A.257. Émission de \textit{findings} le cas échéant. & Mois 7--9 \\
+\addlinespace
+4 & \textbf{Audit sur site.} Inspection des locaux, vérification des compétences du personnel (21.A.245), des moyens matériels et logiciels, et du fonctionnement effectif du DAS. & Mois 10--12 \\
+\addlinespace
+5 & \textbf{Actions correctives.} Levée des \textit{findings}\,: l'organisme apporte les preuves de mise en conformité. La DGAC valide chaque action corrective. & Mois 12--15 \\
+\addlinespace
+6 & \textbf{Délivrance.} Émission de l'agrément DOA sous la forme EASA Form~53. Le \textit{Terms of Approval} (ToA) précise le périmètre et les privilèges accordés. & Mois 15--18 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Le délai global typique s'étend de 12 à 24~mois, selon la complexité du périmètre et la maturité de l'organisme.
+
+\subsection{Privilèges et surveillance continue}
+
+Une fois l'agrément obtenu, SmartAero Composites bénéficie des privilèges définis à la section~21.A.263, notamment la capacité d'approuver des modifications mineures et des réparations sans approbation préalable de l'EASA. L'agrément est soumis à une surveillance continue (21.A.247)\,: la DGAC réalise des audits périodiques (en principe annuels) et peut suspendre ou révoquer l'agrément en cas de non-conformité persistante.
+
+% ============================================================
+\section{Contextualisation du projet}
+% ============================================================
+
+Le projet technique porté par SmartAero Composites concerne la conception d'un panneau de fuselage en polymère renforcé de fibres de carbone (CFRP) intégrant un réseau de capteurs piézoélectriques directement co-laminés dans l'empilement composite. Ce système remplit une double fonction\,: d'une part, la surveillance continue de l'intégrité structurelle (\textit{Structural Health Monitoring} --- SHM) par émission et réception d'ondes de Lamb permettant la détection de délaminages, de fissures et d'impacts à peine visibles (\textit{Barely Visible Impact Damage} --- BVID)\,; d'autre part, la récupération de l'énergie vibratoire ambiante par effet piézoélectrique inverse, alimentant les capteurs de manière autonome.
+
+Le problème résolu est celui de la dépendance aux inspections visuelles et instrumentées périodiques, coûteuses en immobilisation d'aéronef et limitées dans leur capacité à détecter des dommages internes. L'originalité de l'innovation réside dans l'intégration des capteurs dès la phase de fabrication du stratifié, supprimant les opérations de collage en surface (\textit{retrofit}) et garantissant une meilleure durabilité du système de mesure dans l'environnement opérationnel sévère d'un fuselage pressurisé.
+
+% ============================================================
+\section{Moyens mis en \oe uvre}
+% ============================================================
+
+Pour chaque étape de la procédure DOA, les réponses attendues, les livrables et les institutions consultées sont détaillés dans le tableau~\ref{tab:moyens}.
+
+\begin{table}[H]
+\centering
+\caption{Livrables et institutions par étape de la procédure DOA}
+\label{tab:moyens}
+\small
+\begin{tabularx}{\textwidth}{@{}c X X@{}}
+\toprule
+\textbf{Étape} & \textbf{Livrables / Réponses attendues} & \textbf{Institutions} \\
+\midrule
+1 & Lettre d'intention, présentation du périmètre DOA, organigramme projet & DGAC \\
+\addlinespace
+2 & DOE/DOH complet, EASA Form~50, matrice de conformité 21.A.239, procédures DAS & DGAC, OSAC \\
+\addlinespace
+3 & Réponses aux \textit{findings} documentaires, révisions du DOE & DGAC \\
+\addlinespace
+4 & Démonstration des compétences, accès aux outils de conception (FEM, essais), preuve de fonctionnement du DAS & DGAC, EASA \\
+\addlinespace
+5 & Plans d'action correctifs, preuves de clôture, mise à jour du DOE & DGAC \\
+\addlinespace
+6 & Réception de l'EASA Form~53, publication des \textit{Terms of Approval} & DGAC, EASA \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+En parallèle de la procédure DOA, SmartAero Composites engage les activités de certification du panneau SHM selon les CS-25, nécessitant la consultation de l'EASA (Certification Directorate) pour l'établissement éventuel de \textit{Special Conditions} et du BEA pour l'analyse des retours d'expérience sur les modes de défaillance structuraux composites.
+
+% ============================================================
+\section{Normes réglementaires applicables}
+% ============================================================
+
+\subsection{CS-25 --- Certification Specifications for Large Aeroplanes}
+
+\begin{itemize}[nosep]
+    \item \textbf{CS-25.571} (\textit{Damage Tolerance and Fatigue Evaluation})\,: exige la démonstration que la structure composite tolère les dommages en service sans perte de résistance résiduelle en dessous des charges limites, sur toute la durée de vie de l'aéronef. Le système SHM doit être qualifié comme moyen acceptable de détection des dommages dans le cadre du programme d'inspection.
+    \item \textbf{CS-25.603} (\textit{Materials})\,: impose la qualification de chaque matériau composite (résine, fibre, préimprégné) selon des bases de données statistiques (valeurs B-basis ou A-basis) et la prise en compte des effets environnementaux (température, humidité --- \textit{hot/wet conditions}).
+    \item \textbf{CS-25.613} (\textit{Material Strength Properties and Design Values})\,: requiert que les valeurs de conception soient établies par des essais suffisants pour garantir la résistance structurelle avec une probabilité et un niveau de confiance définis.
+\end{itemize}
+
+\subsection{Special Conditions EASA}
+
+En l'absence de spécifications de certification dédiées aux systèmes SHM embarqués, l'EASA émet des \textit{Special Conditions} (SC) au titre de la section~21.A.16B, définissant les exigences de sécurité complémentaires applicables. Ces SC couvrent notamment la fiabilité du système de détection, les seuils de détectabilité minimaux, la tolérance aux pannes et l'intégration dans le programme de maintenance.
+
+\subsection{DO-160G --- Environmental Conditions and Test Procedures}
+
+La norme RTCA DO-160G (équivalent EUROCAE ED-14G) définit les essais d'environnement auxquels les capteurs piézoélectriques et leur électronique associée doivent satisfaire\,: vibrations (section~8), chocs (section~7), variation de température (section~4), humidité (section~6), altitude (section~4.6) et susceptibilité aux interférences électromagnétiques (sections~19 à 22).
+
+\subsection{AMC 20-29 --- Composite Aircraft Structure}
+
+Le moyen acceptable de conformité AMC~20-29 de l'EASA fournit le cadre méthodologique pour la certification des structures composites\,: approche \textit{building block} (essais du coupon à la structure complète), prise en compte de la variabilité des propriétés mécaniques, gestion des réparations et programme de surveillance en service.
+
+\subsection{Autres références}
+
+\begin{itemize}[nosep]
+    \item \textbf{ARP~6461} (SAE International)\,: lignes directrices pour le développement et la mise en \oe uvre de systèmes SHM sur structures aéronautiques.
+    \item \textbf{Part~21.A.3B}\,: classification du panneau SHM selon sa fonction (composant ETSO ou pièce standard).
+\end{itemize}
+
+% ============================================================
+\section{Conclusion}
+% ============================================================
+
+La procédure d'obtention d'un agrément DOA selon la Part~21, Sous-partie~J, constitue un prérequis indispensable pour toute entreprise souhaitant concevoir des composants structuraux certifiés pour des aéronefs de transport. Pour SmartAero Composites SAS, cette démarche s'inscrit dans un calendrier de 12 à 24~mois et mobilise des ressources significatives en ingénierie de certification. Le panneau de fuselage CFRP à capteurs piézoélectriques SHM représente une innovation dont la certification requiert, au-delà du cadre standard des CS-25, la définition de \textit{Special Conditions} spécifiques par l'EASA. L'application rigoureuse des normes CS-25.571, DO-160G et AMC~20-29, combinée à un \textit{Design Assurance System} robuste, conditionne la navigabilité de ce système et sa viabilité industrielle.
+
+% ============================================================
+\appendix
+\section{Déclaration d'utilisation de l'IA}
+% ============================================================
+
+Le présent rapport a été rédigé avec l'assistance d'un outil d'intelligence artificielle (GitHub Copilot, modèle Claude). L'IA a été utilisée pour\,:
+
+\begin{itemize}[nosep]
+    \item la structuration et la rédaction du rapport\,;
+    \item la recherche et la vérification des références réglementaires (Part~21, CS-25, DO-160G, AMC~20-29)\,;
+    \item la formulation technique en français professionnel.
+\end{itemize}
+
+L'ensemble du contenu a été vérifié, validé et adapté par l'auteur. La responsabilité du contenu final incombe intégralement à l'auteur du rapport.
+
+% ============================================================
+\section{Bibliographie}
+% ============================================================
+
+\subsection*{Réglementation européenne}
+
+\begin{enumerate}[nosep]
+    \item Règlement (UE) n\textsuperscript{o}\,748/2012 de la Commission du 3~août 2012 établissant des règles d'exécution pour la certification de navigabilité et environnementale des aéronefs. \textit{Journal officiel de l'Union européenne}, L~224.
+    \item EASA, \textit{Certification Specifications and Acceptable Means of Compliance for Large Aeroplanes (CS-25)}, Amendment~27, 2023.
+    \item EASA, \textit{Acceptable Means of Compliance AMC~20-29 --- Composite Aircraft Structure}, 2010.
+    \item EASA, Part~21 --- Sous-partie~J (21.A.231--21.A.265). Inclus dans le Règlement (UE) n\textsuperscript{o}\,748/2012.
+\end{enumerate}
+
+\subsection*{Normes et standards industriels}
+
+\begin{enumerate}[nosep, resume]
+    \item RTCA, \textit{DO-160G --- Environmental Conditions and Test Procedures for Airborne Equipment}, décembre 2010.
+    \item EUROCAE, \textit{ED-14G --- Environmental Conditions and Test Procedures for Airborne Equipment}, 2011.
+    \item SAE International, \textit{ARP~6461 --- Guidelines for Implementation of Structural Health Monitoring on Fixed-Wing Aircraft}, 2013.
+\end{enumerate}
+
+\subsection*{Thèses et travaux académiques}
+
+\begin{enumerate}[nosep, resume]
+    \item GIURGIUTIU V., \textit{Structural Health Monitoring with Piezoelectric Wafer Active Sensors}, 2\textsuperscript{e}~éd., Academic Press, 2014.
+    \item BOLLER C., CHANG F.-K., FUJINO Y. (éd.), \textit{Encyclopedia of Structural Health Monitoring}, John Wiley \& Sons, 2009.
+    \item SU Z., YE L., \textit{Identification of Damage Using Lamb Waves: From Fundamentals to Applications}, Springer, 2009.
+    \item BACH M., \textit{Structural Health Monitoring for Composite Structures --- Concepts and Certification Aspects}, Thèse, TU München, 2017.
+\end{enumerate}
+
+\subsection*{Documents institutionnels}
+
+\begin{enumerate}[nosep, resume]
+    \item DGAC, \textit{Guide du demandeur --- Agrément d'organisme de conception (DOA)}, DSAC, 2021.
+    \item BEA, \textit{Rapport final --- Accident du vol AF447}, Bureau d'Enquêtes et d'Analyses, juillet 2012.
+\end{enumerate}
+
+\end{document}
