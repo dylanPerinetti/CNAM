@@ -33,7 +33,7 @@ La **Responsabilité Sociale des Entreprises (RSE)** — ou *Corporate Social Re
 
 La RSE est profondément liée au développement durable, défini par le **Rapport Brundtland (1987)** :
 
-> « Un développement qui répond aux besoins du présent sans compromettre la capacité des générations futures à répondre aux leurs. »
+> ⭐ **À SAVOIR PAR CŒUR** — « Un développement qui répond aux besoins du présent sans compromettre la capacité des générations futures à répondre aux leurs. »
 
 La RSE est en quelque sorte **la déclinaison opérationnelle du développement durable à l'échelle de l'entreprise**.
 
