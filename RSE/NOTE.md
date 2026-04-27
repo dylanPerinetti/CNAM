@@ -367,6 +367,68 @@ Elle aboutit à une **matrice de matérialité** permettant de prioriser les act
 
 ---
 
+## 6.5 L'Analyse du Cycle de Vie (ACV)
+
+### Définition
+
+L'**Analyse du Cycle de Vie (ACV)** est une méthode d'évaluation des impacts environnementaux d'un produit, d'un service ou d'un procédé sur **l'ensemble de son cycle de vie** : de l'extraction des matières premières jusqu'à la fin de vie (mise au rebut, recyclage).
+
+> On parle aussi d'approche **"du berceau à la tombe"** (*cradle to grave*), ou **"du berceau au berceau"** (*cradle to cradle*) dans une logique d'économie circulaire.
+
+### Les 4 phases de l'ACV (norme ISO 14040/14044)
+
+```
+  1. Définition       2. Inventaire        3. Évaluation        4. Interprétation
+  des objectifs   →   du cycle de vie  →   des impacts      →   des résultats
+  et du champ         (ICV)                (ÉICV)
+  d'application
+```
+
+| Phase | Contenu |
+|-------|---------|
+| **1. Définition des objectifs** | Délimiter le système étudié, définir l'unité fonctionnelle (ex. : 1 kg de papier produit) |
+| **2. Inventaire (ICV)** | Recenser tous les flux entrants (énergie, matières) et sortants (émissions, déchets) |
+| **3. Évaluation des impacts (ÉICV)** | Calculer les impacts : changement climatique, acidification, eutrophisation, consommation d'eau… |
+| **4. Interprétation** | Analyser les résultats, identifier les points chauds, formuler des recommandations |
+
+### Le cycle de vie d'un produit
+
+```
+Extraction       Fabrication      Distribution     Utilisation      Fin de vie
+des matières  →  & transformation  →  & transport  →  par le         →  (recyclage,
+premières                                            consommateur       enfouissement,
+                                                                        incinération)
+```
+
+### Les grandes catégories d'impacts évalués
+
+| Catégorie | Indicateur |
+|-----------|------------|
+| Changement climatique | kg CO₂ équivalent |
+| Appauvrissement de la couche d'ozone | kg CFC-11 équivalent |
+| Acidification | kg SO₂ équivalent |
+| Eutrophisation | kg PO₄³⁻ équivalent |
+| Consommation d'eau | m³ |
+| Consommation d'énergie | MJ |
+| Toxicité humaine | kg 1,4-DCB équivalent |
+
+### Utilité pour la RSE
+
+- **Éco-conception** : identifier dès la conception les étapes les plus polluantes pour les réduire
+- **Communication** : affichage environnemental des produits (ex. : score environnemental en France)
+- **Reporting** : intégrer les impacts scope 3 dans le bilan carbone
+- **Comparaison** : choisir entre deux procédés ou deux matériaux sur des critères objectifs
+- **Certification** : certaines normes et labels (ISO 14025, EPD) s'appuient sur des ACV
+
+### Limites de l'ACV
+
+- Coûteuse et longue à réaliser
+- Résultats dépendants des hypothèses retenues
+- Ne couvre pas les aspects sociaux (→ ACV sociale en développement)
+- Données parfois difficiles à obtenir sur toute la chaîne d'approvisionnement
+
+---
+
 ## 7. Reporting et indicateurs RSE
 
 ### 7.1 Pourquoi le reporting RSE ?
