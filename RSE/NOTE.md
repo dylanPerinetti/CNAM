@@ -661,7 +661,16 @@ La RSE évolue du statut de **fonction support** à celui de **levier stratégiq
 | **2010** | Appropriation |
 | **2020** | Transition |
 
-### Fiche 6 : Acteurs institutionnels clés
+### Fiche 6 : Les 4 pressions qui poussent les entreprises à adopter la RSE ⭐ À SAVOIR PAR CŒUR
+
+| Type de pression | Acteurs concernés | Description |
+|------------------|-------------------|-------------|
+| **Juridique** | Réglementation, Jurisprudence, Risque de poursuite | Se manifeste à travers les exigences du cadre réglementaire, la jurisprudence et le risque de contentieux et de poursuites civiles. |
+| **Financière** | Contrôle des coûts, Gains d'efficacité, Assureurs, Actionnaires | Renvoie aux coûts engagés ainsi qu'aux économies potentielles résultant des pratiques environnementales et sociales mises en œuvre. |
+| **Commerciale** | Normes industrielles, Clients, Fournisseurs | Recouvre les enjeux liés à l'accès aux marchés, aux conditions contractuelles, ainsi qu'à la réputation et à l'image de marque. |
+| **Sociale** | Employés, Communautés locales, Public, ONG | Émane des parties prenantes telles que les communautés locales, les employés, le public et les ONG. |
+
+### Fiche 7 : Acteurs institutionnels clés
 
 | Acteur | Rôle |
 |--------|------|
