@@ -663,7 +663,20 @@ La RSE évolue du statut de **fonction support** à celui de **levier stratégiq
 | **2010** | Appropriation |
 | **2020** | Transition |
 
-### Fiche 6 : Les 4 pressions qui poussent les entreprises à adopter la RSE ⭐ À SAVOIR PAR CŒUR
+### Fiche 6 : Profils d'entreprise selon leur positionnement environnemental et social ⭐ À SAVOIR PAR CŒUR
+
+**À retenir — Caractérisation des dimensions d'une entreprise en fonction de son positionnement stratégique en matière d'environnement et de responsabilité sociale** *(adapté de Gendron, 2004)*
+
+| Profil | Opérations | Organisation | Communication | Mission | Rapport au politique |
+|--------|------------|--------------|---------------|---------|----------------------|
+| **Délictuelle** | Équipement désuet | Pas de responsable | Mauvaise image publique | Pas de référence à l'environnement ou à la responsabilité sociale | Poursuites judiciaires — Stratégies d'évitement |
+| **Conforme** | Responsabilité et maîtrise opérationnelle — Entretien des équipements | Responsable, fonction ou comité environnemental ou RSE | Image neutre | Pas de référence à l'environnement ou à la responsabilité sociale | Respect de la réglementation |
+| **Chef de file** | Modernisation des procédés et nouvelles technologies | Politique et système de gestion environnementale, direction environnement ou RSE | Bonne image publique | Référence à l'excellence environnementale et sociale | Dialogue avec les pouvoirs publics — Participation à l'élaboration du cadre réglementaire |
+| **Écologique** | Procédés d'avant-garde — Produits écologiques | Intégration des valeurs écologiques au sein de l'organisation — Responsabilités définies en regard des principes du développement durable | Éducation du public | Mission formulée en termes écologiques et sociaux | Pression sur les pouvoirs publics en faveur d'une protection accrue de l'environnement et d'une prise en compte des dimensions sociales |
+
+---
+
+### Fiche 7 : Les 4 pressions qui poussent les entreprises à adopter la RSE ⭐ À SAVOIR PAR CŒUR
 
 | Type de pression | Acteurs concernés | Description |
 |------------------|-------------------|-------------|
@@ -672,7 +685,7 @@ La RSE évolue du statut de **fonction support** à celui de **levier stratégiq
 | **Commerciale** | Normes industrielles, Clients, Fournisseurs | Recouvre les enjeux liés à l'accès aux marchés, aux conditions contractuelles, ainsi qu'à la réputation et à l'image de marque. |
 | **Sociale** | Employés, Communautés locales, Public, ONG | Émane des parties prenantes telles que les communautés locales, les employés, le public et les ONG. |
 
-### Fiche 7 : Acteurs institutionnels clés
+### Fiche 8 : Acteurs institutionnels clés
 
 | Acteur | Rôle |
 |--------|------|
