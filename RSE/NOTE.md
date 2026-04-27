@@ -648,10 +648,12 @@ La RSE évolue du statut de **fonction support** à celui de **levier stratégiq
 - **Environnement** : P7 (précaution) + P8 (initiatives proactives) + P9 (technologies propres)
 - **Anti-corruption** : P10
 
-### Fiche 5 : Évolution générale des entreprises vis-à-vis de la RSE ⭐ À SAVOIR PAR CŒUR
+### Fiche 5 : Évolution de l'attitude des entreprises face à l'environnement ⭐ À SAVOIR PAR CŒUR
 
-| Décennie | Attitude générale |
-|----------|-------------------|
+**À retenir — Évolution de l'attitude générale des entreprises vis-à-vis de l'environnement de 1950 à aujourd'hui** *(adapté de Gendron, 2004)*
+
+| Décennie | Attitude générale des entreprises face à la problématique environnementale |
+|:--------:|:--------------------------------------------------------------------------:|
 | **1950** | Ignorance |
 | **1960** | Dénégation |
 | **1970** | Débats |
