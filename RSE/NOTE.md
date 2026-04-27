@@ -429,6 +429,35 @@ premières                                            consommateur       enfouis
 
 ---
 
+## 6.6 Stratégie d'éco-conception ⭐ À SAVOIR PAR CŒUR
+
+**À retenir — Stratégie d'éco-conception** *(adapté de Ryan, 2006)*
+
+L'éco-conception consiste à intégrer les critères environnementaux **dès la phase de conception** d'un produit, en agissant sur chaque étape de son cycle de vie.
+
+```
+Extraction des       Fabrication       Utilisation       Fin de vie
+matières premières  ──────────────────────────────────────────────▶
+```
+
+| Phase du cycle de vie | Stratégies d'éco-conception |
+|-----------------------|-----------------------------|
+| **Extraction des matières premières** | Réduire le contenu matériel |
+| | Réduire le nombre de matériaux différents |
+| | Éliminer les matériaux toxiques |
+| | Utiliser des matériaux recyclés et recyclables |
+| | Utiliser des matériaux biodégradables |
+| **Fabrication** | Minimiser la consommation d'énergie fossile, d'eau et de ressources |
+| **Utilisation** | Réduire la consommation d'énergie |
+| | Remplacer les énergies fossiles par les énergies renouvelables |
+| | Réduire la consommation d'eau |
+| | Réduire l'utilisation d'autres ressources |
+| | Augmenter la durée de vie du produit |
+| **Fin de vie** | Minimiser le nombre de composants |
+| | Conception en vue d'un désassemblage |
+
+---
+
 ## 7. Reporting et indicateurs RSE
 
 ### 7.1 Pourquoi le reporting RSE ?
