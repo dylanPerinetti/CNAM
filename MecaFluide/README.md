@@ -1,28 +1,37 @@
-# 🌊 Mécanique des Fluides — CNAM AEA110
+# 🌊 Mécanique des Fluides — Cours et exercices
 
-Cours complet et site web de révision pour le module **Mécanique des Fluides Fondamentale (AEA110)** du CNAM.
+Site de cours complet et d'exercices corrigés en **Mécanique des Fluides Fondamentale**.
+
+> **Rédigé par Dylan Perinetti**
+> D'après le cours de M. Alfarez (CNAM)
 
 ## 📂 Contenu
 
 ```
 MecaFluide/
-├── index.html             ← Site web (sommaire + lecteur)
+├── index.html             ← Site web (sommaire interactif + lecteur)
 ├── README.md              ← Ce fichier
-└── cours/
-    ├── 01-introduction.md
-    ├── 02-cinematique.md
-    ├── 03-equations-bilans.md
-    ├── 04-bilan-energie.md
-    ├── 05-bernoulli.md
-    ├── 06-sustentation.md
-    ├── 07-navier-stokes.md
-    ├── 08-adimensionnement.md
-    └── 09-fiches-revisions.md
+├── cours/
+│   ├── 01-introduction.md
+│   ├── 02-cinematique.md
+│   ├── 03-equations-bilans.md
+│   ├── 04-bilan-energie.md
+│   ├── 05-bernoulli.md
+│   ├── 06-sustentation.md
+│   ├── 07-navier-stokes.md
+│   ├── 08-adimensionnement.md
+│   └── 09-fiches-revisions.md
+└── exercices/
+    ├── 01-cinematique-exos.md
+    ├── 02-bilans-exos.md
+    ├── 03-bernoulli-exos.md
+    ├── 04-navier-stokes-exos.md
+    └── 05-adimensionnement-exos.md
 ```
 
 ## 🚀 Comment lancer le site
 
-Le site charge dynamiquement les `.md` via `fetch()`. Les navigateurs bloquent ces requêtes en `file://`, il faut donc un mini-serveur HTTP local.
+Le site charge dynamiquement les fichiers `.md` via `fetch()`. Les navigateurs bloquent ces requêtes en `file://`, il faut donc lancer un mini-serveur HTTP local.
 
 ### Option 1 — Python (le plus simple)
 
@@ -41,49 +50,54 @@ npx serve
 ```
 
 ### Option 3 — VS Code
+
 Installe l'extension **Live Server**, puis clic droit sur `index.html` → *Open with Live Server*.
 
 ## ✨ Fonctionnalités du site
 
-- 📑 **Sommaire interactif** dans la barre latérale
-- 🔍 **Recherche** dans les titres de cours
-- 📐 **Rendu LaTeX** des formules (KaTeX)
+- 📑 **Sommaire interactif** dans la barre latérale (cours + exercices)
+- 🔍 **Recherche** dans les titres
+- 📐 **Rendu LaTeX** robuste des formules mathématiques (KaTeX, sans interférence avec le markdown)
 - 🎨 **Thème sombre** confortable pour de longues sessions
-- 📱 **Responsive** (lisible sur mobile)
-- 🃏 **Cartes** sur la page d'accueil pour navigation rapide
+- 📱 **Responsive** (mobile, tablette, desktop) avec menu hamburger
+- ✏️ **Exercices corrigés** avec explications pas à pas
+- ℹ️ **Page À propos** avec sources et auteur
 
 ## 📚 Programme couvert
 
-| # | Chapitre | Sujets clés |
-|---|----------|-------------|
-| 1 | Introduction | Définition d'un fluide, propriétés (ρ, μ, ν), milieu continu |
-| 2 | Cinématique | Eulérien/Lagrangien, dérivée particulaire, lignes de courant |
-| 3 | Équations de bilans | Reynolds, continuité, quantité de mouvement |
-| 4 | Bilan d'énergie | Premier principe, dissipation visqueuse, pertes de charge |
-| 5 | Bernoulli | Théorème classique, généralisé, Pitot, Venturi, Torricelli |
-| 6 | Sustentation | Portance, traînée, profil d'aile, décrochage |
-| 7 | Navier-Stokes | Construction, Poiseuille, Couette, Stokes |
-| 8 | Adimensionnement | Re, Ma, Fr, Vaschy-Buckingham, similitude |
-| 9 | Fiches révision | Formules clés, méthodologie, pièges classiques |
+### Cours
+1. **Introduction** — propriétés des fluides, milieu continu
+2. **Cinématique** — Eulérien/Lagrangien, dérivée particulaire
+3. **Équations de bilans** — Reynolds, continuité, qté de mouvement
+4. **Bilan d'énergie** — premier principe, dissipation, pertes de charge
+5. **Bernoulli** — théorèmes classique et généralisé
+6. **Sustentation** — portance, traînée, profils d'aile
+7. **Navier-Stokes** — formulation, Poiseuille, Couette
+8. **Adimensionnement** — Re, Ma, Fr, Vaschy-Buckingham
+9. **Fiches de révision** — formules, méthodologie, pièges
 
-## 🎯 Pour qui ?
-
-Étudiants du CNAM en :
-- Aéronautique (AEA)
-- Génie mécanique
-- Énergétique
-- Toute formation comportant un cours de mécanique des fluides niveau L3
+### Exercices corrigés
+- E1 — Cinématique
+- E2 — Bilans (force sur paroi, aubage)
+- E3 — Bernoulli (Torricelli, Pitot, Venturi, pompe)
+- E4 — Navier-Stokes (Poiseuille, Couette, Stokes)
+- E5 — Adimensionnement (Vaschy-Buckingham, similitude)
 
 ## 🔧 Modifier le contenu
 
-Édite simplement les fichiers `.md` dans `cours/` — le site les rechargera automatiquement.
+Édite simplement les fichiers `.md` dans `cours/` ou `exercices/` — le site les rechargera automatiquement.
+
 Pour ajouter un nouveau chapitre :
-1. Crée le `.md` dans `cours/`
-2. Ajoute une entrée dans le tableau `COURSES` en haut du `<script>` dans `index.html`
+1. Crée le fichier `.md` dans le bon dossier
+2. Ajoute une entrée dans le tableau `COURSES` ou `EXOS` en haut du `<script>` dans `index.html`
 
 ## 📜 Sources et références
 
-- Cours AEA110, CNAM
+- Cours de **M. Alfarez** — Mécanique des fluides fondamentale, CNAM
 - *Mécanique des Fluides*, P.-L. Viollet
 - *Fundamentals of Fluid Mechanics*, B.R. Munson
 - *An Introduction to Fluid Dynamics*, G.K. Batchelor
+
+## 📝 Licence et avertissement
+
+Contenu pédagogique destiné à un usage personnel d'étude. Ne se substitue pas au cours officiel.
