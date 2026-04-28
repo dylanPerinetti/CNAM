@@ -429,7 +429,28 @@ premières                                            consommateur       enfouis
 
 ---
 
-## 6.6 Stratégie d'éco-conception ⭐ À SAVOIR PAR CŒUR
+## 6.6 Éco-conception
+
+### Définition ⭐ À SAVOIR PAR CŒUR
+
+> **« L'éco-conception est une démarche innovante qui se caractérise par l'intégration des critères environnementaux dès la phase de conception d'un produit ou service afin d'en réduire les impacts tout au long de son cycle de vie »** [AFNOR]
+
+C'est une **démarche globale**, caractérisée par une approche :
+- **Cycle de vie** (pensée système de la conception à la fin de vie)
+- **Multicritère** (plusieurs impacts environnementaux pris en compte)
+- **Systémique** (vision d'ensemble du produit et de son environnement)
+
+### Les 3 principes de l'éco-conception ⭐ À SAVOIR PAR CŒUR
+
+| N° | Principe | Description |
+|----|----------|-------------|
+| **①** | **Pensée cycle de vie** | Prendre en compte toutes les étapes du cycle de vie du produit (extraction → fabrication → utilisation → fin de vie) |
+| **②** | **Multi-composant** | Agir sur l'ensemble des composants du produit et leurs interactions |
+| **③** | **Multi-critères** | Évaluer simultanément plusieurs impacts environnementaux (climat, eau, énergie, toxicité…) |
+
+---
+
+### Stratégie d'éco-conception ⭐ À SAVOIR PAR CŒUR
 
 **À retenir — Stratégie d'éco-conception** *(adapté de Ryan, 2006)*
 
@@ -775,6 +796,21 @@ La RSE évolue du statut de **fonction support** à celui de **levier stratégiq
 | **Financière** | Contrôle des coûts, Gains d'efficacité, Assureurs, Actionnaires | Renvoie aux coûts engagés ainsi qu'aux économies potentielles résultant des pratiques environnementales et sociales mises en œuvre. |
 | **Commerciale** | Normes industrielles, Clients, Fournisseurs | Recouvre les enjeux liés à l'accès aux marchés, aux conditions contractuelles, ainsi qu'à la réputation et à l'image de marque. |
 | **Sociale** | Employés, Communautés locales, Public, ONG | Émane des parties prenantes telles que les communautés locales, les employés, le public et les ONG. |
+
+### Fiche 9 : Éco-conception — Définition et principes ⭐ À SAVOIR PAR CŒUR
+
+**Définition AFNOR :**
+> « L'éco-conception est une démarche innovante qui se caractérise par l'intégration des critères environnementaux dès la phase de conception d'un produit ou service afin d'en réduire les impacts tout au long de son cycle de vie »
+
+**Approche globale = cycle de vie + multicritère + systémique**
+
+| N° | Principe | Mot-clé |
+|----|----------|---------|
+| **①** | Pensée cycle de vie | Vision globale de la conception à la fin de vie |
+| **②** | Multi-composant | Agir sur tous les composants et leurs interactions |
+| **③** | Multi-critères | Plusieurs impacts évalués simultanément |
+
+---
 
 ### Fiche 8 : Acteurs institutionnels clés
 
