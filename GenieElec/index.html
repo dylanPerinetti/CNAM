@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moteurs à effet Hall — Physique, mathématiques & électronique de puissance</title>
+<meta name="description" content="Site interactif présentant les moteurs à effet Hall pour la propulsion spatiale : physique des plasmas, dérive E×B, accélération ionique, électronique de puissance. Animations et démonstrations mathématiques.">
+
+<link rel="stylesheet" href="assets/style.css">
+
+<!-- KaTeX pour les formules -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, {delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}]});"></script>
+
+<script defer src="assets/app.js"></script>
+</head>
+<body>
+
+<!-- ===================== HEADER ===================== -->
+<header class="site-header">
+  <button class="menu-toggle" id="menuToggle" aria-label="Menu">☰</button>
+  <div class="brand">
+    <span class="brand-icon">🚀</span>
+    <div class="brand-text">
+      <h1>Moteurs à effet Hall</h1>
+      <p>Physique, mathématiques &amp; électronique de puissance</p>
+    </div>
+  </div>
+  <nav class="header-nav">
+    <a href="#hero">Intro</a>
+    <a href="#plasma">Plasma</a>
+    <a href="#hall">Effet Hall</a>
+    <a href="#acceleration">Accélération</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#electronics">Électronique</a>
+    <a href="#performance">Performances</a>
+  </nav>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero" id="hero">
+  <canvas id="heroCanvas" class="hero-canvas"></canvas>
+  <div class="hero-content">
+    <div class="hero-badge">CNAM — Génie Électrique — Électronique de puissance</div>
+    <h2 class="hero-title">
+      Propulser un satellite<br>
+      <span class="gradient-text">avec du plasma</span>
+    </h2>
+    <p class="hero-lede">
+      Comment un champ magnétique radial et un champ électrique axial peuvent-ils accélérer
+      des ions à <strong>20&nbsp;000&nbsp;m/s</strong> ? Visite guidée d'un propulseur électrique
+      qui équipe les satellites modernes — du plasma jusqu'au convertisseur DC/DC.
+    </p>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-value">1500–3000 s</span><span class="stat-label">Impulsion spécifique</span></div>
+      <div class="stat"><span class="stat-value">200–400 V</span><span class="stat-label">Tension de décharge</span></div>
+      <div class="stat"><span class="stat-value">&gt; 90 %</span><span class="stat-label">Rendement PPU visé</span></div>
+      <div class="stat"><span class="stat-value">~50 mN</span><span class="stat-label">Poussée typique</span></div>
+    </div>
+    <div class="hero-cta">
+      <a href="#plasma" class="btn btn-primary">Commencer la visite</a>
+      <a href="#performance" class="btn btn-ghost">Voir les performances</a>
+    </div>
+  </div>
+  <div class="hero-scroll-hint">▼ scroll</div>
+</section>
+
+<!-- ===================== SECTION 1 : PROBLEMATIQUE ===================== -->
+<section class="section section-question" id="problematique">
+  <div class="container">
+    <div class="question-card">
+      <div class="q-mark">?</div>
+      <p class="q-text">
+        Dans quelle mesure l'<strong>électronique de puissance</strong> conditionne-t-elle les
+        performances, la stabilité et le rendement des moteurs à effet Hall dans les systèmes
+        de propulsion spatiale ?
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SECTION 2 : PLASMA ===================== -->
+<section class="section" id="plasma">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Qu'est-ce qu'un plasma ?</h2>
+      <p class="section-sub">Le 4<sup>e</sup> état de la matière — un gaz partiellement ionisé.</p>
+    </div>
+
+    <div class="grid-2">
+      <div class="text-block">
+        <p>
+          Un <strong>plasma</strong> est un gaz dans lequel une partie des atomes a perdu un ou
+          plusieurs électrons. Le milieu contient à la fois des <em>ions positifs</em>,
+          des <em>électrons libres</em> et des <em>neutres</em>.
+        </p>
+        <p>Caractéristiques principales :</p>
+        <ul class="bullet-list">
+          <li><strong>Quasi-neutralité</strong> : $n_e \approx n_i$ à l'échelle macroscopique</li>
+          <li><strong>Mobilité</strong> : les électrons (légers) se déplacent ~1800× plus vite que les ions</li>
+          <li><strong>Ionisation</strong> par collisions électron–neutre</li>
+        </ul>
+
+        <div class="formula-box">
+          <p class="formula-label">Réaction d'ionisation du xénon</p>
+          $$ \mathrm{Xe} + e^{-} \longrightarrow \mathrm{Xe}^{+} + 2\,e^{-} $$
+          <p class="formula-note">
+            Énergie d'ionisation du xénon : <strong>12,13 eV</strong> — le xénon est choisi
+            pour sa masse atomique élevée et son faible potentiel d'ionisation.
+          </p>
+        </div>
+
+        <div class="formula-box">
+          <p class="formula-label">Distribution de Maxwell–Boltzmann (vitesses)</p>
+          $$ f(v) = 4\pi\, n \left(\frac{m}{2\pi k_B T}\right)^{3/2} v^2 \, e^{-\frac{mv^2}{2 k_B T}} $$
+          <p class="formula-note">
+            La queue de cette distribution contient les électrons assez énergétiques pour
+            ioniser un atome neutre.
+          </p>
+        </div>
+      </div>
+
+      <div class="canvas-card">
+        <div class="canvas-title">⚛️ Animation : ionisation du xénon</div>
+        <canvas id="plasmaCanvas"></canvas>
+        <div class="canvas-controls">
+          <label>Énergie des e⁻
+            <input type="range" id="plasmaEnergy" min="1" max="10" value="5">
+          </label>
+          <button id="plasmaReset" class="btn-mini">↻ reset</button>
+        </div>
+        <div class="legend">
+          <span><span class="dot dot-electron"></span>électron</span>
+          <span><span class="dot dot-neutral"></span>Xe neutre</span>
+          <span><span class="dot dot-ion"></span>Xe⁺ (ion)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SECTION 3 : EFFET HALL (E x B) ===================== -->
+<section class="section section-alt" id="hall">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>L'effet Hall : la dérive E&nbsp;×&nbsp;B</h2>
+      <p class="section-sub">Pourquoi les électrons tournent en rond et les ions filent tout droit.</p>
+    </div>
+
+    <div class="grid-2">
+      <div class="canvas-card">
+        <div class="canvas-title">🌀 Trajectoire d'un électron sous E (axial) et B (radial)</div>
+        <canvas id="exbCanvas"></canvas>
+        <div class="canvas-controls">
+          <label>Champ B
+            <input type="range" id="bSlider" min="1" max="20" value="10">
+          </label>
+          <label>Champ E
+            <input type="range" id="eSlider" min="1" max="20" value="8">
+          </label>
+          <button id="exbReset" class="btn-mini">↻ reset</button>
+        </div>
+        <div class="legend">
+          <span><span class="dot dot-electron"></span>électron</span>
+          <span class="vec-leg vec-E">→ E (axial)</span>
+          <span class="vec-leg vec-B">⊙ B (radial)</span>
+          <span class="vec-leg vec-drift">↑ vitesse de dérive</span>
+        </div>
+      </div>
+
+      <div class="text-block">
+        <p>
+          Dans la chambre du propulseur, un champ électrique axial $\vec{E}$ et un champ
+          magnétique radial $\vec{B}$ sont superposés. Les électrons subissent la force de
+          Lorentz :
+        </p>
+        <div class="formula-box">
+          $$ \vec{F} = q\,\vec{E} + q\,\vec{v} \times \vec{B} $$
+        </div>
+        <p>
+          Le résultat est une <strong>dérive</strong> perpendiculaire à $\vec{E}$ et $\vec{B}$,
+          de vitesse :
+        </p>
+        <div class="formula-box highlight">
+          $$ \vec{v}_{D} \;=\; \frac{\vec{E}\times\vec{B}}{B^{2}} $$
+          <p class="formula-note">
+            Cette dérive est <strong>azimutale</strong> : les électrons tournent autour de l'axe
+            du propulseur en formant un courant de Hall. Ils sont <em>piégés</em>.
+          </p>
+        </div>
+
+        <p>
+          <strong>Rayon de Larmor</strong> (rayon des cercles de gyration) :
+        </p>
+        <div class="formula-box">
+          $$ r_L = \frac{m\,v_\perp}{|q|\,B} $$
+          <p class="formula-note">
+            Pour les électrons : $r_L \sim 1\text{ mm}$ → <strong>piégés</strong> dans la zone B.<br>
+            Pour les ions Xe⁺ : $r_L \gg L$ (taille du canal) → <strong>non magnétisés</strong>,
+            ils répondent uniquement à $\vec{E}$ et sont accélérés vers la sortie.
+          </p>
+        </div>
+
+        <p class="callout">
+          💡 C'est cette <strong>asymétrie de magnétisation</strong> entre électrons et ions
+          qui rend le moteur à effet Hall possible.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SECTION 4 : ACCELERATION IONIQUE ===================== -->
+<section class="section" id="acceleration">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Accélération des ions et poussée</h2>
+      <p class="section-sub">Le théorème de la quantité de mouvement appliqué à un jet de plasma.</p>
+    </div>
+
+    <div class="grid-2">
+      <div class="text-block">
+        <p>
+          Une fois ionisés, les Xe⁺ sont accélérés par $\vec{E}$. L'énergie cinétique acquise vaut :
+        </p>
+        <div class="formula-box">
+          $$ \tfrac{1}{2}\,m_i\,v_e^{2} \;=\; q\,U_d $$
+        </div>
+        <p>D'où la <strong>vitesse d'éjection</strong> :</p>
+        <div class="formula-box highlight">
+          $$ v_e \;=\; \sqrt{\frac{2\,q\,U_d}{m_i}} $$
+          <p class="formula-note">
+            Avec $U_d = 300$ V et le xénon ($m_i = 2{,}18\times 10^{-25}$ kg, $q = e$),
+            on obtient $v_e \approx 21\,000$ m/s.
+          </p>
+        </div>
+
+        <p><strong>Poussée</strong> par conservation de la quantité de mouvement :</p>
+        <div class="formula-box highlight">
+          $$ F \;=\; \dot m \cdot v_e $$
+        </div>
+
+        <p><strong>Impulsion spécifique</strong> :</p>
+        <div class="formula-box">
+          $$ I_{sp} \;=\; \frac{v_e}{g_0} $$
+          <p class="formula-note">
+            $g_0 = 9{,}81$ m/s². Pour $v_e = 21$ km/s → $I_{sp} \approx 2140$ s
+            (vs ~450 s pour un moteur chimique).
+          </p>
+        </div>
+
+        <p><strong>Rendement global</strong> :</p>
+        <div class="formula-box">
+          $$ \eta \;=\; \frac{\tfrac12\,\dot m\, v_e^{2}}{P_{\text{élec}}} $$
+        </div>
+      </div>
+
+      <div class="canvas-card">
+        <div class="canvas-title">🔥 Accélération des ions dans le canal</div>
+        <canvas id="accelCanvas"></canvas>
+        <div class="canvas-controls">
+          <label>Tension U<sub>d</sub>
+            <input type="range" id="udSlider" min="100" max="500" value="300">
+            <span id="udValue">300 V</span>
+          </label>
+          <label>Débit ṁ
+            <input type="range" id="mdotSlider" min="1" max="10" value="5">
+            <span id="mdotValue">5 mg/s</span>
+          </label>
+        </div>
+        <div class="results-grid">
+          <div class="result-card">
+            <span class="result-label">Vitesse d'éjection</span>
+            <span class="result-value" id="resVe">21 000 m/s</span>
+          </div>
+          <div class="result-card">
+            <span class="result-label">Poussée</span>
+            <span class="result-value" id="resF">105 mN</span>
+          </div>
+          <div class="result-card">
+            <span class="result-label">I<sub>sp</sub></span>
+            <span class="result-value" id="resIsp">2140 s</span>
+          </div>
+          <div class="result-card">
+            <span class="result-label">Puissance jet</span>
+            <span class="result-value" id="resP">1.10 kW</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SECTION 5 : ARCHITECTURE ===================== -->
+<section class="section section-alt" id="architecture">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Architecture du système</h2>
+      <p class="section-sub">Du panneau solaire au plasma — la chaîne de conversion d'énergie.</p>
+    </div>
+
+    <div class="architecture-diagram" id="archDiagram">
+      <!-- SVG injected by JS for clean animation control -->
+    </div>
+
+    <div class="arch-table-wrap">
+      <h3>Sous-systèmes alimentés par la PPU</h3>
+      <table class="arch-table">
+        <thead>
+          <tr><th>Sous-système</th><th>Tension</th><th>Puissance</th><th>Rôle</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Décharge (anode)</td><td>200–400 V</td><td>kW</td><td>Crée le plasma</td></tr>
+          <tr><td>Bobines magnétiques</td><td>10–30 V</td><td>~10–30 W</td><td>Génère B radial</td></tr>
+          <tr><td>Cathode chauffée</td><td>10–15 V</td><td>~50 W</td><td>Émet les électrons</td></tr>
+          <tr><td>Allumeur</td><td>kV (impulsion)</td><td>impulsion</td><td>Démarre la décharge</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SECTION 6 : ELECTRONIQUE DE PUISSANCE ===================== -->
+<section class="section" id="electronics">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Électronique de puissance — le cœur du sujet</h2>
+      <p class="section-sub">Convertisseurs DC/DC et régulation pour une charge non-linéaire.</p>
+    </div>
+
+    <div class="grid-2">
+      <div class="canvas-card">
+        <div class="canvas-title">⚡ Signal PWM et conversion buck</div>
+        <canvas id="pwmCanvas"></canvas>
+        <div class="canvas-controls">
+          <label>Rapport cyclique α
+            <input type="range" id="duty" min="5" max="95" value="50">
+            <span id="dutyVal">50 %</span>
+          </label>
+          <label>Fréquence
+            <input type="range" id="freq" min="20" max="200" value="100">
+            <span id="freqVal">100 kHz</span>
+          </label>
+        </div>
+        <div class="formula-box small">
+          $$ V_{out} \;=\; \alpha \cdot V_{in} $$
+          <p class="formula-note" id="pwmEq">Avec V<sub>in</sub> = 100 V → V<sub>out</sub> = 50 V</p>
+        </div>
+      </div>
+
+      <div class="text-block">
+        <p>
+          La <strong>PPU</strong> (Power Processing Unit) convertit les ~100 V du bus
+          satellite en plusieurs tensions régulées. Topologies typiques :
+        </p>
+        <ul class="bullet-list">
+          <li><strong>Buck</strong> — abaisseur (cathode, bobines)</li>
+          <li><strong>Boost</strong> — élévateur (allumeur HV)</li>
+          <li><strong>Full-bridge isolé</strong> — décharge anodique (haute puissance + isolation galvanique)</li>
+        </ul>
+
+        <p>Critère central : <strong>rendement</strong> $\eta_{PPU}$.</p>
+        <div class="formula-box">
+          $$ \eta_{PPU} \;=\; \frac{P_{out}}{P_{out} + P_{cond} + P_{sw} + P_{mag}} $$
+          <p class="formula-note">
+            Pertes par conduction ($R_{ds(on)}\,I^{2}$), commutation ($\tfrac12 V I f_{sw}$)
+            et magnétiques (cuivre + fer).
+          </p>
+        </div>
+
+        <p>Contraintes spécifiques au spatial :</p>
+        <table class="mini-table">
+          <tr><td>📡 CEM</td><td>Filtrage EMI, couplages plasma</td></tr>
+          <tr><td>☢️ Radiations</td><td>Composants <em>rad-hard</em>, redondance</td></tr>
+          <tr><td>⚖️ Masse</td><td>Densité de puissance &gt; 1 kW/kg</td></tr>
+          <tr><td>♨️ Thermique</td><td>Refroidissement passif uniquement</td></tr>
+        </table>
+
+        <p class="callout warn">
+          ⚠️ Le plasma est une <strong>charge non linéaire à impédance dynamique négative</strong> :
+          il oscille (mode "respiration" 10–30 kHz). La boucle de régulation doit garantir
+          la stabilité malgré ces perturbations.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SECTION 7 : PERFORMANCES ===================== -->
+<section class="section section-alt" id="performance">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Performances &amp; comparaison</h2>
+      <p class="section-sub">Pourquoi un moteur électrique l'emporte sur les longues missions.</p>
+    </div>
+
+    <div class="grid-2">
+      <div class="canvas-card">
+        <div class="canvas-title">📊 Hall vs chimique : équation de Tsiolkovski</div>
+        <canvas id="tsiolCanvas"></canvas>
+        <div class="canvas-controls">
+          <label>Δv requis (km/s)
+            <input type="range" id="dvSlider" min="1" max="15" value="6">
+            <span id="dvVal">6 km/s</span>
+          </label>
+        </div>
+        <div class="results-grid">
+          <div class="result-card">
+            <span class="result-label">Hall (Isp = 2000 s)</span>
+            <span class="result-value" id="tsiolHall">m₀/m_f = 1.36</span>
+          </div>
+          <div class="result-card">
+            <span class="result-label">Chimique (Isp = 450 s)</span>
+            <span class="result-value" id="tsiolChim">m₀/m_f = 3.86</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-block">
+        <p>
+          L'équation de <strong>Tsiolkovski</strong> relie le rapport de masses à la variation
+          de vitesse :
+        </p>
+        <div class="formula-box highlight">
+          $$ \Delta v \;=\; v_e \,\ln\!\left(\frac{m_0}{m_f}\right) \;=\; I_{sp}\, g_0 \,\ln\!\left(\frac{m_0}{m_f}\right) $$
+        </div>
+        <p>
+          Pour un même $\Delta v$, plus $I_{sp}$ est grand, plus le rapport
+          $m_0/m_f$ est faible — donc <strong>moins de carburant embarqué</strong>.
+        </p>
+
+        <table class="comparison-table">
+          <thead>
+            <tr><th></th><th>Hall</th><th>Chimique</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>I<sub>sp</sub></td><td class="good">1500–3000 s</td><td>250–450 s</td></tr>
+            <tr><td>Poussée</td><td>10–500 mN</td><td class="good">kN–MN</td></tr>
+            <tr><td>Durée de fonctionnement</td><td class="good">milliers d'heures</td><td>minutes</td></tr>
+            <tr><td>Carburant</td><td class="good">~10× moins</td><td>beaucoup</td></tr>
+            <tr><td>Décollage</td><td>❌ impossible</td><td class="good">✅</td></tr>
+          </tbody>
+        </table>
+
+        <p class="callout">
+          🛰️ <strong>Applications</strong> : Starlink, OneWeb, BepiColombo (ESA/JAXA),
+          Psyche (NASA), SMART-1, Deep Space 1.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CONCLUSION ===================== -->
+<section class="section section-conclusion">
+  <div class="container">
+    <div class="conclusion-card">
+      <h2>🎯 Conclusion</h2>
+      <p>
+        Les moteurs à effet Hall illustrent la <strong>convergence entre physique des plasmas
+        et électronique de puissance</strong>. Le principe — accélérer des ions par un champ
+        électrique tout en piégeant les électrons par dérive E×B — repose sur une physique
+        élégante. Mais sa mise en œuvre dépend entièrement de systèmes électroniques capables
+        de fournir, convertir et réguler l'énergie avec précision face à une charge plasma
+        intrinsèquement instable.
+      </p>
+      <p>
+        L'électronique de puissance ne constitue pas seulement un support fonctionnel, mais un
+        <strong>élément structurant des performances globales</strong> du propulseur.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="site-footer">
+  <div class="container">
+    <p><strong>Auteurs</strong> : Dylan Perinetti, Maxime Deplace, Hamet Doumbouya</p>
+    <p>CNAM — Ingénieur2000 — Génie Électrique — Électronique de puissance</p>
+    <p class="footer-note">Site interactif réalisé dans le cadre des travaux académiques du CNAM.</p>
+  </div>
+</footer>
+
+</body>
+</html>
