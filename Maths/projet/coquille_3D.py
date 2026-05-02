@@ -2,380 +2,331 @@
 """
 Visualisation 3D des motifs de coquillages — Modèle de Meinhardt
 =================================================================
-Lance ce script avec :  python3 coquille_3D.py
+Lancer :  python3 coquille_3D.py
 
-Ce script simule les motifs pigmentaires avec les 3 modèles de Meinhardt,
-puis les projette sur la surface 3D d'une coquille réaliste.
+Principe de la projection (Meinhardt) :
+  - x  (espace, horizontal dans le graphe espace-temps)
+      → UNE SEULE révolution θ ∈ [0, 2π] autour du cône
+  - t  (temps, vertical dans le graphe espace-temps)
+      → direction de croissance : apex (t=0) → ouverture (t=T)
+  - a(x,t) → couleur du pigment sur la surface
 
-Deux géométries disponibles :
-  - cône         : coquille conique (ex. Conus textile)
-  - spirale      : coquille spiralée logarithmique (ex. Oliva, Amoria)
+Géométries disponibles :
+  cone_droit      : cône allongé droit (Amoria, Lyria)
+  cone_convexe    : profil convexe légèrement bombé (Oliva)
+  escargot        : coquille planispirale hélicoïdale (Cepaea)
 """
 
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
-from mpl_toolkits.mplot3d import Axes3D  # noqa: F401
+from mpl_toolkits.mplot3d import Axes3D   # noqa: F401
 import warnings
 warnings.filterwarnings('ignore')
 
 
 # =============================================================================
-#  SIMULATION (même code que le notebook, auto-contenu)
+#  SIMULATION DES 3 MODÈLES
 # =============================================================================
 
-def _diffusion(q, dx):
-    """d²q/dx² par différences finies centrées, CL périodiques."""
-    return (np.roll(q, -1) - 2 * q + np.roll(q, 1)) * dx ** 2
+def _diff(q):
+    """d²q/dx² différences finies centrées, CL périodiques, dx=1."""
+    return np.roll(q, -1) - 2 * q + np.roll(q, 1)
 
 
-def simuler_modele_1(nx=150, nt=800,
-                     ra=0.05, rb=0.08, ba=0.0, bb=0.0,
+def simuler_modele_1(nx=200, nt=600,
+                     ra=0.05, rb=0.08, ba=0., bb=0.,
                      Da=0.015, Db=0.40,
-                     a0=1.5, b0=1.5, seed=42):
-    """
-    Modèle activateur-inhibiteur (motifs en lignes droites).
-    Retourne stocke_a : tableau (nt+1) x (nx+1) de concentrations d'activateur.
-    """
+                     a0=1.5, b0=1.5, seed=0):
+    """Activateur-inhibiteur → lignes droites (Cepaea / Lyria)."""
     np.random.seed(seed)
-    dx = dt = 1.0
     s = 0.08 * ra * np.random.rand(nx + 1) + 0.96 * ra
-
-    a = np.full(nx + 1, a0, dtype=float)
-    b = np.full(nx + 1, b0, dtype=float)
-
-    # Activation initiale aléatoire
+    a = np.full(nx + 1, a0); b = np.full(nx + 1, b0)
     i = 1
     for _ in range(30):
-        a[i] = 1.0
-        i += np.random.randint(0, 101)
-        if i > nx:
-            break
-
-    stocke_a = np.zeros((nt + 1, nx + 1))
-    stocke_a[0] = a.copy()
-
-    for _ in range(nt):
-        b_safe = np.maximum(b, 1e-10)
-        fa = s * (a ** 2 / b_safe + ba) - ra * a + Da * _diffusion(a, dx)
-        fb = s * a ** 2 + bb - rb * b + Db * _diffusion(b, dx)
-        a += dt * fa
-        b += dt * fb
-        a = np.maximum(a, 0.0)
-        b = np.maximum(b, 0.0)
-        stocke_a[_ + 1] = a.copy()
-
-    return stocke_a
+        a[i] = 1.; i += np.random.randint(0, 101)
+        if i > nx: break
+    out = np.zeros((nt + 1, nx + 1)); out[0] = a
+    for n in range(nt):
+        fa = s * (a**2 / np.maximum(b, 1e-10) + ba) - ra*a + Da*_diff(a)
+        fb = s * a**2 + bb - rb*b + Db*_diff(b)
+        a += fa; b += fb; a = np.maximum(a, 0); b = np.maximum(b, 0)
+        out[n+1] = a
+    return out
 
 
-def simuler_modele_2(nx=500, nt=1000,
-                     ra=0.10, rb=0.00, ba=0.005,
-                     Da=0.004, Db=0.00, sa=1.00, sigma_max=0.012,
+def simuler_modele_2(nx=200, nt=600,
+                     ra=0.10, rb=0., ba=0.005,
+                     Da=0.004, Db=0., sa=1., sigma_max=0.012,
                      a0=0.5, b0=0.5, seed=1):
-    """
-    Modèle activateur-substrat (motifs en lignes ondulantes).
-    """
+    """Activateur-substrat → lignes ondulantes (Amoria undulata)."""
     np.random.seed(seed)
-    dx = dt = 1.0
     s = 0.08 * ra * np.random.rand(nx + 1) + 0.96 * ra
     x_arr = np.arange(nx + 1)
     sigma = sigma_max * np.abs(np.sin(4 * np.pi * x_arr / nx))
-
-    a = np.full(nx + 1, a0, dtype=float)
-    b = np.full(nx + 1, b0, dtype=float)
-
+    a = np.full(nx + 1, a0); b = np.full(nx + 1, b0)
     i = 1
     for _ in range(30):
-        a[i] = 1.0
-        i += np.random.randint(0, 101)
-        if i > nx:
-            break
-
-    stocke_a = np.zeros((nt + 1, nx + 1))
-    stocke_a[0] = a.copy()
-
+        a[i] = 1.; i += np.random.randint(0, 101)
+        if i > nx: break
+    out = np.zeros((nt + 1, nx + 1)); out[0] = a
     for n in range(nt):
-        a_tilde_sq = a ** 2 / (1 + sa * a ** 2) + ba
-        fa = s * b * a_tilde_sq - ra * a + Da * _diffusion(a, dx)
-        fb = sigma - s * b * a_tilde_sq - rb * b + Db * _diffusion(b, dx)
-        a += dt * fa
-        b += dt * fb
-        a = np.maximum(a, 0.0)
-        b = np.maximum(b, 0.0)
-        stocke_a[n + 1] = a.copy()
-
-    return stocke_a
+        at2 = a**2 / (1 + sa*a**2) + ba
+        fa = s*b*at2 - ra*a + Da*_diff(a)
+        fb = sigma - s*b*at2 - rb*b + Db*_diff(b)
+        a += fa; b += fb; a = np.maximum(a, 0); b = np.maximum(b, 0)
+        out[n+1] = a
+    return out
 
 
-def simuler_modele_3(nx=300, nt=1500,
+def simuler_modele_3(nx=200, nt=800,
                      ra=0.10, rb=0.014, rc=0.10, bb=0.10,
-                     Da=0.015, Db=0.00, sa=0.25,
-                     a0=0.0, b0=0.10, c0=0.10, seed=2):
-    """
-    Modèle activateur-inhibiteur-hormone (ondes en collision, motif ">").
-    """
+                     Da=0.015, Db=0., sa=0.25,
+                     a0=0., b0=0.10, c0=0.10, seed=2):
+    """Activateur-inhibiteur-hormone → ondes en '>' (Oliva porphyria)."""
     np.random.seed(seed)
-    dx = dt = 1.0
     s = 0.08 * ra * np.random.rand(nx + 1) + 0.96 * ra
-
-    a = np.full(nx + 1, a0, dtype=float)
-    b = np.full(nx + 1, b0, dtype=float)
-    c = c0
-
+    a = np.full(nx + 1, a0); b = np.full(nx + 1, b0); c = c0
     i = 1
     for _ in range(30):
-        a[i] = 1.0
-        i += np.random.randint(0, 101)
-        if i > nx:
-            break
-
-    stocke_a = np.zeros((nt + 1, nx + 1))
-    stocke_a[0] = a.copy()
-
+        a[i] = 1.; i += np.random.randint(0, 101)
+        if i > nx: break
+    out = np.zeros((nt + 1, nx + 1)); out[0] = a
     for n in range(nt):
-        c_safe = max(c, 1e-10)
-        autocatal = s * a ** 2 / (1 + sa * a ** 2)
-        fa = autocatal / (bb + b) - ra * a + Da * _diffusion(a, dx)
-        fb = autocatal - rb * b / c_safe + Db * _diffusion(b, dx)
-        fc = -rc * c + (1.0 / nx) * np.sum(rc * a)
-        a += dt * fa
-        b += dt * fb
-        c += dt * fc
-        a = np.maximum(a, 0.0)
-        b = np.maximum(b, 0.0)
-        c = max(c, 1e-10)
-        stocke_a[n + 1] = a.copy()
-
-    return stocke_a
+        cs = max(c, 1e-10)
+        ac = s * a**2 / (1 + sa*a**2)
+        fa = ac / (bb + b) - ra*a + Da*_diff(a)
+        fb = ac - rb*b/cs + Db*_diff(b)
+        fc = -rc*c + np.mean(rc*a)
+        a += fa; b += fb; c += fc
+        a = np.maximum(a, 0); b = np.maximum(b, 0); c = max(c, 1e-10)
+        out[n+1] = a
+    return out
 
 
 # =============================================================================
-#  GÉOMÉTRIES 3D
+#  GÉOMÉTRIES 3D — principe : x → 1 révolution, t → axe de croissance
 # =============================================================================
 
-def geometrie_cone(nt, nx, n_tours=2.5, rayon_base=1.0, rayon_apex=0.06, hauteur=4.0):
+def _maillage_base(nt, nx):
+    """Retourne THETA (nt×nx) et T_NORM (nt×nx) pour toutes les géométries."""
+    # endpoint=False : le dernier point en θ = 0 et le premier coincident
+    theta = np.linspace(0, 2 * np.pi, nx, endpoint=False)
+    t_norm = np.linspace(0, 1, nt)
+    return np.meshgrid(theta, t_norm)          # THETA, T (nt × nx)
+
+
+def geo_cone_droit(nt, nx, hauteur=5.0, R_base=1.0, R_apex=0.04):
     """
-    Coquille conique :
-      - temps t  → hauteur le long de l'axe (de l'apex vers la base)
-      - espace x → angle autour de la circonférence
+    Cône droit allongé (type Amoria, Lyria).
+    L'apex (t=0, ancien) est en BAS, l'ouverture (t=T, récent) est en HAUT.
     """
-    theta = np.linspace(0, 2 * np.pi * n_tours, nx)   # angle circumférentiel
-    t_norm = np.linspace(0, 1, nt)                      # [0=apex, 1=base]
-
-    THETA, T = np.meshgrid(theta, t_norm)              # (nt, nx)
-
-    R = rayon_apex + (rayon_base - rayon_apex) * T     # rayon croissant vers la base
-    Z = hauteur * (1.0 - T)                            # apex en haut, base en bas
-
-    X = R * np.cos(THETA)
-    Y = R * np.sin(THETA)
-    return X, Y, Z
+    THETA, T = _maillage_base(nt, nx)
+    R = R_apex + (R_base - R_apex) * T        # rayon croissant vers le haut
+    Z = hauteur * T
+    return R * np.cos(THETA), R * np.sin(THETA), Z
 
 
-def geometrie_spirale(nt, nx, n_tours=3.5, b=0.12, r_tube_0=0.18):
+def geo_cone_convexe(nt, nx, hauteur=4.5, R_max=1.0, R_apex=0.05):
     """
-    Coquille à spirale logarithmique (type Oliva/Amoria) :
-      - temps t  → angle de spirale θ ∈ [0, 2π·n_tours]
-      - espace x → angle φ autour de la section circulaire du tube
-
-    Équations :
-      R(θ) = exp(b·θ)           rayon de la spirale
-      r(θ) = r_tube_0·exp(b·θ/2)  rayon du tube (croît avec la spirale)
-      X = (R + r·cos(φ))·cos(θ)
-      Y = (R + r·cos(φ))·sin(θ)
-      Z = r·sin(φ)·exp(b·θ/4) + b·θ·R/6   (légère montée hélicoïdale)
+    Profil convexe : le rayon max est atteint aux 2/3 de la hauteur,
+    puis se referme légèrement vers l'ouverture (type Oliva).
     """
-    theta_coil = np.linspace(0, 2 * np.pi * n_tours, nt)   # angle de spirale
-    phi_tube   = np.linspace(0, 2 * np.pi, nx)              # angle autour du tube
+    THETA, T = _maillage_base(nt, nx)
+    # Profil en cloche : R(t) ~ sin^0.6(π*t) * R_max avec un minimum aux extrémités
+    profil = np.sin(np.pi * T) ** 0.55
+    R = R_apex + (R_max - R_apex) * profil
+    Z = hauteur * T
+    return R * np.cos(THETA), R * np.sin(THETA), Z
 
-    THETA, PHI = np.meshgrid(theta_coil, phi_tube, indexing='ij')  # (nt, nx)
 
-    R_coil = np.exp(b * THETA)
-    r_tube = r_tube_0 * np.exp(b * THETA / 2)
+def geo_escargot(nt, nx, n_tours=3.5, b_helix=0.10, r_tube_0=0.08):
+    """
+    Coquille planispirale hélicoïdale (type Cepaea nemoralis).
+    - t → angle de la spirale (plusieurs tours)
+    - x → angle autour du tube toroïdal
+
+    Chaque anneau du tube porte une ligne du motif (x).
+    """
+    theta_coil = np.linspace(0, 2 * np.pi * n_tours, nt)
+    phi_tube   = np.linspace(0, 2 * np.pi, nx, endpoint=False)
+    THETA, PHI = np.meshgrid(theta_coil, phi_tube, indexing='ij')   # (nt, nx)
+
+    # Spirale logarithmique
+    R_coil = np.exp(b_helix * THETA)
+    r_tube = r_tube_0 * np.exp(b_helix * THETA / 2)
 
     X = (R_coil + r_tube * np.cos(PHI)) * np.cos(THETA)
     Y = (R_coil + r_tube * np.cos(PHI)) * np.sin(THETA)
-    Z = (r_tube * np.sin(PHI) * np.exp(b * THETA / 4)
-         + b * THETA * R_coil / 6)
-
+    Z = r_tube * np.sin(PHI) + b_helix * THETA * R_coil * 0.3
     return X, Y, Z
 
 
 # =============================================================================
-#  NORMALISATION + COLORMAP
+#  COULEUR
 # =============================================================================
 
-def normaliser(stocke_a):
-    """Normalise stocke_a dans [0, 1] pour l'application de la colormap."""
+def pigment(stocke_a, cmap_name='bone', inverse=True):
+    """
+    Convertit stocke_a en tableau RGBA.
+    inverse=True : fort activateur → pigment sombre (comme sur les vraies coquilles).
+    """
     mn, mx = stocke_a.min(), stocke_a.max()
-    if mx > mn:
-        return (stocke_a - mn) / (mx - mn)
-    return np.zeros_like(stocke_a)
-
-
-def appliquer_couleur(stocke_a_norm, cmap_name='copper'):
-    """Retourne le tableau RGBA (nt, nx, 4) à partir des valeurs normalisées."""
-    cmap = cm.get_cmap(cmap_name)
-    return cmap(stocke_a_norm)
+    n = (stocke_a - mn) / (mx - mn + 1e-12)
+    if inverse:
+        n = 1.0 - n
+    return cm.get_cmap(cmap_name)(n)
 
 
 # =============================================================================
-#  TRACÉ 3D
+#  TRACÉ
 # =============================================================================
 
-def tracer_coquille(X, Y, Z, facecolors, titre='Coquille 3D', elev=20, azim=45):
-    """Affiche la coquille 3D avec le motif pigmentaire."""
-    fig = plt.figure(figsize=(10, 8))
-    ax = fig.add_subplot(111, projection='3d')
+def afficher(X, Y, Z, facecolors, titre='', elev=25, azim=40, ax=None):
+    standalone = (ax is None)
+    if standalone:
+        fig = plt.figure(figsize=(9, 9))
+        ax  = fig.add_subplot(111, projection='3d')
 
-    ax.plot_surface(X, Y, Z,
-                    facecolors=facecolors,
+    ax.plot_surface(X, Y, Z, facecolors=facecolors,
                     rstride=1, cstride=1,
-                    linewidth=0, antialiased=True,
-                    shade=True)
-
+                    linewidth=0, antialiased=True, shade=True)
     ax.set_axis_off()
-    ax.set_title(titre, fontsize=14, pad=15)
+    ax.set_title(titre, fontsize=12, pad=12)
     ax.view_init(elev=elev, azim=azim)
 
-    # Égaliser les axes pour ne pas déformer la géométrie
-    max_range = np.array([X.max() - X.min(),
-                          Y.max() - Y.min(),
-                          Z.max() - Z.min()]).max() / 2
-    mid = lambda arr: (arr.max() + arr.min()) / 2
-    ax.set_xlim(mid(X) - max_range, mid(X) + max_range)
-    ax.set_ylim(mid(Y) - max_range, mid(Y) + max_range)
-    ax.set_zlim(mid(Z) - max_range, mid(Z) + max_range)
+    # Égaliser les axes (aucune déformation)
+    pts = np.array([X.ravel(), Y.ravel(), Z.ravel()])
+    centre = pts.mean(axis=1)
+    demi   = (pts.max(axis=1) - pts.min(axis=1)).max() / 2
+    ax.set_xlim(centre[0]-demi, centre[0]+demi)
+    ax.set_ylim(centre[1]-demi, centre[1]+demi)
+    ax.set_zlim(centre[2]-demi, centre[2]+demi)
 
-    plt.tight_layout()
-    return fig, ax
+    if standalone:
+        plt.tight_layout()
+    return ax
 
 
 # =============================================================================
-#  PROGRAMME PRINCIPAL
+#  MAIN
 # =============================================================================
 
 if __name__ == '__main__':
 
-    print("=" * 60)
-    print("Visualisation 3D des motifs de coquillages")
-    print("Modèle de Meinhardt — Dylan Perinetti")
-    print("=" * 60)
+    print("Simulation et visualisation 3D des coquillages de Meinhardt\n")
 
     # ------------------------------------------------------------------
-    # 1. COQUILLE CONIQUE — Modèle 1 (Cepaea nemoralis, rayures)
+    # Modèle 1 — Cepaea nemoralis : lignes droites
+    # Géométrie escargot (planispirale) + cône pour la vue dépliée
     # ------------------------------------------------------------------
-    print("\n[1/3] Simulation modèle 1 (activateur-inhibiteur)...")
-    stocke1 = simuler_modele_1(
-        nx=160, nt=600,
-        ra=0.05, rb=0.08, Da=0.015, Db=0.40,
-        a0=1.5, b0=1.5, seed=0
-    )
+    print("[1/3] Modèle 1 — Cepaea nemoralis …", end=' ', flush=True)
+    S1 = simuler_modele_1(nx=200, nt=500, Da=0.015, Db=0.40, seed=0)
+    col1 = pigment(S1, 'bone',   inverse=True)    # brun-blanc
+    print("OK")
 
-    X_c, Y_c, Z_c = geometrie_cone(
-        nt=stocke1.shape[0], nx=stocke1.shape[1],
-        n_tours=2.5, rayon_base=1.0, rayon_apex=0.06, hauteur=4.0
-    )
+    X1s, Y1s, Z1s = geo_escargot(S1.shape[0], S1.shape[1],
+                                  n_tours=3.5, b_helix=0.10, r_tube_0=0.08)
+    X1c, Y1c, Z1c = geo_cone_droit(S1.shape[0], S1.shape[1],
+                                    hauteur=5.0, R_base=0.8, R_apex=0.04)
 
-    norm1 = normaliser(stocke1)
-    # Colormap 'copper' : fond chaud, pigment sombre (comme l'encre sur coquille)
-    colors1 = appliquer_couleur(1.0 - norm1, cmap_name='copper')
-
-    fig1, ax1 = tracer_coquille(
-        X_c, Y_c, Z_c, colors1,
-        titre='Coquille conique — Modèle 1\nCepaea nemoralis (lignes droites)',
-        elev=25, azim=30
-    )
-    plt.savefig('coquille_modele1_cone.png', dpi=150, bbox_inches='tight')
-    print("   → Sauvegardé : coquille_modele1_cone.png")
-
-    # ------------------------------------------------------------------
-    # 2. COQUILLE SPIRALÉE — Modèle 2 (Amoria undulata, lignes ondulantes)
-    # ------------------------------------------------------------------
-    print("\n[2/3] Simulation modèle 2 (activateur-substrat)...")
-    stocke2 = simuler_modele_2(
-        nx=200, nt=500,
-        ra=0.10, rb=0.00, ba=0.005,
-        Da=0.004, Db=0.00, sa=1.00, sigma_max=0.012,
-        a0=0.5, b0=0.5, seed=1
-    )
-
-    X_s, Y_s, Z_s = geometrie_spirale(
-        nt=stocke2.shape[0], nx=stocke2.shape[1],
-        n_tours=3.5, b=0.12, r_tube_0=0.18
-    )
-
-    norm2 = normaliser(stocke2)
-    # Colormap 'YlOrBr' : jaune → brun, évoque les teintes naturelles de coquillage
-    colors2 = appliquer_couleur(norm2, cmap_name='YlOrBr')
-
-    fig2, ax2 = tracer_coquille(
-        X_s, Y_s, Z_s, colors2,
-        titre='Coquille spiralée — Modèle 2\nAmoria undulata (lignes ondulantes)',
-        elev=20, azim=60
-    )
-    plt.savefig('coquille_modele2_spirale.png', dpi=150, bbox_inches='tight')
-    print("   → Sauvegardé : coquille_modele2_spirale.png")
-
-    # ------------------------------------------------------------------
-    # 3. COQUILLE SPIRALÉE — Modèle 3 (Oliva porphyria, ondes en ">")
-    # ------------------------------------------------------------------
-    print("\n[3/3] Simulation modèle 3 (activateur-inhibiteur-hormone)...")
-    stocke3 = simuler_modele_3(
-        nx=200, nt=800,
-        ra=0.10, rb=0.014, rc=0.10, bb=0.10,
-        Da=0.015, Db=0.00, sa=0.25,
-        a0=0.0, b0=0.10, c0=0.10, seed=2
-    )
-
-    X_s3, Y_s3, Z_s3 = geometrie_spirale(
-        nt=stocke3.shape[0], nx=stocke3.shape[1],
-        n_tours=4.0, b=0.10, r_tube_0=0.22
-    )
-
-    norm3 = normaliser(stocke3)
-    # Colormap 'bone' inverse : motif en ">" clair sur fond sombre
-    colors3 = appliquer_couleur(1.0 - norm3, cmap_name='bone')
-
-    fig3, ax3 = tracer_coquille(
-        X_s3, Y_s3, Z_s3, colors3,
-        titre='Coquille spiralée — Modèle 3\nOliva porphyria (ondes en ">")',
-        elev=20, azim=45
-    )
-    plt.savefig('coquille_modele3_spirale.png', dpi=150, bbox_inches='tight')
-    print("   → Sauvegardé : coquille_modele3_spirale.png")
-
-    # ------------------------------------------------------------------
-    # 4. VUE D'ENSEMBLE : 3 coquilles côte à côte
-    # ------------------------------------------------------------------
-    print("\n[4/4] Composition d'ensemble...")
-    fig_all = plt.figure(figsize=(20, 7))
-
-    for idx, (X, Y, Z, col, titre) in enumerate([
-        (X_c,  Y_c,  Z_c,  colors1, 'Modèle 1\nCepaea nemoralis\n(lignes droites)'),
-        (X_s,  Y_s,  Z_s,  colors2, 'Modèle 2\nAmoria undulata\n(lignes ondulantes)'),
-        (X_s3, Y_s3, Z_s3, colors3, 'Modèle 3\nOliva porphyria\n(ondes en ">")'),
-    ]):
-        ax = fig_all.add_subplot(1, 3, idx + 1, projection='3d')
-        ax.plot_surface(X, Y, Z, facecolors=col,
-                        rstride=1, cstride=1,
-                        linewidth=0, antialiased=True, shade=True)
-        ax.set_axis_off()
-        ax.set_title(titre, fontsize=11)
-        ax.view_init(elev=25, azim=40 + idx * 10)
-
-        # Même rapport d'aspect
-        max_r = np.array([X.max()-X.min(), Y.max()-Y.min(), Z.max()-Z.min()]).max()/2
-        mid = lambda a: (a.max()+a.min())/2
-        ax.set_xlim(mid(X)-max_r, mid(X)+max_r)
-        ax.set_ylim(mid(Y)-max_r, mid(Y)+max_r)
-        ax.set_zlim(mid(Z)-max_r, mid(Z)+max_r)
-
-    fig_all.suptitle("Motifs pigmentaires de coquillages — Modèle de Meinhardt\nDylan Perinetti",
-                     fontsize=14, y=1.02)
+    fig1, axes1 = plt.subplots(1, 2, figsize=(14, 7),
+                                subplot_kw={'projection': '3d'})
+    afficher(X1s, Y1s, Z1s, col1,
+             titre='Cepaea nemoralis\n(coquille spiralée)', ax=axes1[0],
+             elev=20, azim=30)
+    afficher(X1c, Y1c, Z1c, col1,
+             titre='Cepaea nemoralis\n(vue dépliée sur cône)', ax=axes1[1],
+             elev=25, azim=45)
+    fig1.suptitle("Modèle 1 — activateur-inhibiteur (Da=0.015, Db=0.40)",
+                  fontsize=13)
     plt.tight_layout()
-    plt.savefig('coquilles_3D_ensemble.png', dpi=150, bbox_inches='tight')
-    print("   → Sauvegardé : coquilles_3D_ensemble.png")
+    plt.savefig('coquille_modele1.png', dpi=150, bbox_inches='tight')
+    print("   → coquille_modele1.png")
 
-    print("\nTerminé ! Affichage des figures...")
+    # ------------------------------------------------------------------
+    # Modèle 2 — Amoria undulata : lignes ondulantes
+    # Géométrie cône droit allongé
+    # ------------------------------------------------------------------
+    print("[2/3] Modèle 2 — Amoria undulata …", end=' ', flush=True)
+    S2 = simuler_modele_2(nx=200, nt=500, seed=1)
+    col2 = pigment(S2, 'YlOrBr', inverse=True)   # jaune-brun naturel
+    print("OK")
+
+    X2, Y2, Z2 = geo_cone_droit(S2.shape[0], S2.shape[1],
+                                 hauteur=5.5, R_base=0.9, R_apex=0.04)
+
+    fig2, ax2 = plt.subplots(1, 1, figsize=(7, 9),
+                              subplot_kw={'projection': '3d'})
+    afficher(X2, Y2, Z2, col2,
+             titre='Amoria undulata\nModèle 2 — activateur-substrat',
+             ax=ax2, elev=20, azim=50)
+    plt.tight_layout()
+    plt.savefig('coquille_modele2.png', dpi=150, bbox_inches='tight')
+    print("   → coquille_modele2.png")
+
+    # ------------------------------------------------------------------
+    # Modèle 3 — Oliva porphyria : ondes en ">"
+    # Géométrie convexe (profil ovale fermé)
+    # ------------------------------------------------------------------
+    print("[3/3] Modèle 3 — Oliva porphyria …", end=' ', flush=True)
+    S3 = simuler_modele_3(nx=200, nt=600, seed=2)
+    col3 = pigment(S3, 'copper', inverse=True)    # teinte cuivrée
+    print("OK")
+
+    X3, Y3, Z3 = geo_cone_convexe(S3.shape[0], S3.shape[1],
+                                   hauteur=4.5, R_max=1.0, R_apex=0.05)
+
+    fig3, ax3 = plt.subplots(1, 1, figsize=(7, 9),
+                              subplot_kw={'projection': '3d'})
+    afficher(X3, Y3, Z3, col3,
+             titre='Oliva porphyria\nModèle 3 — activateur-inhibiteur-hormone',
+             ax=ax3, elev=20, azim=50)
+    plt.tight_layout()
+    plt.savefig('coquille_modele3.png', dpi=150, bbox_inches='tight')
+    print("   → coquille_modele3.png")
+
+    # ------------------------------------------------------------------
+    # Vue d'ensemble : motif 2D (contour) + coquille 3D côte à côte
+    # ------------------------------------------------------------------
+    print("Composition ensemble …", end=' ', flush=True)
+    fig_all = plt.figure(figsize=(20, 12))
+
+    donnees = [
+        (S1, X1c, Y1c, Z1c, col1, 'bone',   True,
+         'Modèle 1 — Cepaea nemoralis\n(lignes droites)'),
+        (S2, X2,  Y2,  Z2,  col2, 'YlOrBr', True,
+         'Modèle 2 — Amoria undulata\n(lignes ondulantes)'),
+        (S3, X3,  Y3,  Z3,  col3, 'copper', True,
+         'Modèle 3 — Oliva porphyria\n(ondes en ">")'),
+    ]
+
+    for col_idx, (S, X, Y, Z, coul, cmap, inv, titre) in enumerate(donnees):
+        # --- Motif 2D (contour espace-temps) ---
+        ax2d = fig_all.add_subplot(2, 3, col_idx + 1)
+        mn, mx = S.min(), S.max()
+        sn = (S - mn) / (mx - mn + 1e-12)
+        if inv:
+            sn = 1.0 - sn
+        ax2d.imshow(sn, aspect='auto', cmap=cmap, origin='lower',
+                    extent=[0, S.shape[1], 0, S.shape[0]])
+        ax2d.set_xlabel('position (x)')
+        ax2d.set_ylabel('temps (t)')
+        ax2d.set_title(titre + '\n— motif 2D', fontsize=10)
+
+        # --- Coquille 3D ---
+        ax3d = fig_all.add_subplot(2, 3, col_idx + 4, projection='3d')
+        afficher(X, Y, Z, coul, titre=titre + '\n— coquille 3D',
+                 ax=ax3d, elev=22, azim=40 + col_idx * 15)
+
+    fig_all.suptitle(
+        "Motifs pigmentaires de coquillages — Modèle de Meinhardt\n"
+        "Haut : contour espace-temps   |   Bas : projection sur coquille 3D",
+        fontsize=13, y=1.01
+    )
+    plt.tight_layout()
+    plt.savefig('coquilles_ensemble.png', dpi=150, bbox_inches='tight')
+    print("OK\n   → coquilles_ensemble.png")
+
+    print("\nTerminé ! Affichage …")
     plt.show()
