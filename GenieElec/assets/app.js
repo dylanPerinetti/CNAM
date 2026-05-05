@@ -1044,6 +1044,105 @@
   }
 
   // =========================================================
+  // MODE PRÉSENTATION (plein écran + nav clavier type PPTX)
+  // =========================================================
+  function initPresentationMode() {
+    const presentBtn   = document.getElementById('presentBtn');
+    const slideCounter = document.getElementById('slideCounter');
+    if (!presentBtn || !slideCounter) return;
+
+    // Liste ordonnée des slides (hero + sections + conclusion), ordre du DOM.
+    const slides = Array.from(
+      document.querySelectorAll('.hero, section.section, section.section-conclusion')
+    ).filter((el, i, arr) => arr.indexOf(el) === i);
+
+    function isPresentationMode() {
+      return document.body.classList.contains('presentation-mode');
+    }
+
+    function currentIndex() {
+      const probe = window.scrollY + window.innerHeight / 3;
+      let idx = 0;
+      for (let i = 0; i < slides.length; i++) {
+        if (slides[i].offsetTop <= probe) idx = i;
+      }
+      return idx;
+    }
+
+    function goTo(i) {
+      i = Math.max(0, Math.min(slides.length - 1, i));
+      slides[i].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function updateCounter() {
+      slideCounter.textContent = `${currentIndex() + 1} / ${slides.length}`;
+    }
+
+    // --- Toggle plein écran ---
+    presentBtn.addEventListener('click', () => {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => {
+          console.warn('Fullscreen refusé :', err);
+          // fallback : activer le mode présentation sans plein écran
+          enterPresentation();
+        });
+      } else {
+        document.exitFullscreen();
+      }
+    });
+
+    function enterPresentation() {
+      document.body.classList.add('presentation-mode');
+      document.documentElement.classList.add('presentation-mode');
+      slideCounter.hidden = false;
+      updateCounter();
+      // re-trigger les resize handlers des canvases
+      window.dispatchEvent(new Event('resize'));
+    }
+    function exitPresentation() {
+      document.body.classList.remove('presentation-mode');
+      document.documentElement.classList.remove('presentation-mode');
+      slideCounter.hidden = true;
+      window.dispatchEvent(new Event('resize'));
+    }
+
+    // --- Sync mode présentation avec l'état fullscreen ---
+    document.addEventListener('fullscreenchange', () => {
+      if (document.fullscreenElement) enterPresentation();
+      else exitPresentation();
+    });
+
+    // --- Navigation clavier (type télécommande PPTX) ---
+    document.addEventListener('keydown', (e) => {
+      if (!isPresentationMode()) return;
+      // Ignorer si l'utilisateur tape dans un input
+      const tag = (e.target && e.target.tagName) || '';
+      if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+
+      const k = e.key;
+      if (k === 'PageDown' || k === 'ArrowDown' || k === 'ArrowRight' || k === ' ' || k === 'Spacebar') {
+        e.preventDefault();
+        goTo(currentIndex() + 1);
+      } else if (k === 'PageUp' || k === 'ArrowUp' || k === 'ArrowLeft') {
+        e.preventDefault();
+        goTo(currentIndex() - 1);
+      } else if (k === 'Home') {
+        e.preventDefault();
+        goTo(0);
+      } else if (k === 'End') {
+        e.preventDefault();
+        goTo(slides.length - 1);
+      }
+      // Esc : géré nativement par le navigateur (sortie fullscreen → fullscreenchange)
+    });
+
+    // --- Mise à jour du compteur au scroll ---
+    window.addEventListener('scroll', () => {
+      if (isPresentationMode()) updateCounter();
+    }, { passive: true });
+  }
+
+  // =========================================================
   // INIT
   // =========================================================
   document.addEventListener('DOMContentLoaded', () => {
@@ -1054,6 +1153,7 @@
     initArch();
     initPWM();
     initTsiol();
+    initPresentationMode();
 
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.header-nav a');
