@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glossaire — Moteurs à effet Hall</title>
+<meta name="description" content="Glossaire des termes techniques utilisés dans le site sur les moteurs à effet Hall : plasma, dérive E×B, électronique de puissance, propulsion ionique.">
+
+<link rel="stylesheet" href="assets/style.css">
+
+<!-- KaTeX pour les formules -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, {delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}]});"></script>
+</head>
+<body>
+
+<!-- ===================== HEADER ===================== -->
+<header class="site-header">
+  <div class="brand">
+    <span class="brand-icon">📖</span>
+    <div class="brand-text">
+      <h1>Glossaire</h1>
+      <p>Termes techniques — Moteurs à effet Hall</p>
+    </div>
+  </div>
+  <a href="index.html" class="btn-back">← Retour au site</a>
+</header>
+
+<!-- ===================== INTRO ===================== -->
+<section class="glossary">
+  <p class="glossary-intro">
+    Définitions des termes utilisés dans la présentation des moteurs à effet Hall —
+    de la <strong>physique des plasmas</strong> à l'<strong>électronique de puissance</strong>.
+  </p>
+
+  <!-- ============== PLASMA & IONISATION ============== -->
+  <div class="glossary-cat">
+    <h2 class="glossary-cat-title"><span class="cat-icon">⚛️</span> Plasma &amp; ionisation</h2>
+    <div class="glossary-grid">
+
+      <div class="glossary-card">
+        <span class="glossary-term">Plasma</span>
+        <p class="glossary-def">
+          Quatrième état de la matière. Gaz partiellement <strong>ionisé</strong> contenant
+          des ions positifs, des électrons libres et des neutres, conducteur électrique et
+          sensible aux champs électromagnétiques.
+        </p>
+      </div>
+
+      <div class="glossary-card">
+        <span class="glossary-term">Quasi-neutralité</span>
+        <p class="glossary-def">
+          À l'échelle macroscopique, $n_e \approx n_i$ : le plasma contient autant de
+          charges positives que négatives. Localement, des écarts existent (gaine, double couche).
+        </p>
+      </div>
+
+      <div class="glossary-card">
+        <span class="glossary-term">Ionisation</span>
+        <p class="glossary-def">
+          Processus qui arrache un ou plusieurs électrons à un atome neutre. Dans un moteur
+          à effet Hall, elle se fait par <strong>collision électron–neutre</strong> :
+          $\mathrm{Xe} + e^{-} \to \mathrm{Xe}^{+} + 2\,e^{-}$.
+        </p>
+      </div>
+
+      <div class="glossary-card">
+        <span class="glossary-term">Xénon <span class="symbol">Xe</span></span>
+        <p class="glossary-def">
+          Gaz noble lourd ($m_i = 2{,}18\times 10^{-25}$ kg) utilisé comme propergol :
+          masse atomique élevée → forte poussée par ion, faible énergie d'ionisation
+          (12,13 eV) → bon rendement.
+        </p>
+      </div>
+
+      <div class="glossary-card">
+        <span class="glossary-term">Énergie d'ionisation <span class="symbol">Eᵢ</span></span>
+        <p class="glossary-def">
+          Énergie minimale pour arracher un électron à un atome. Pour le xénon : <strong>12,13 eV</strong>.
+          C'est l'énergie cinétique seuil que doivent atteindre les électrons pour ioniser.
+        </p>
+      </div>
+
+      <div class="glossary-card">
+        <span class="glossary-term">Distribution de Maxwell–Boltzmann</span>
+        <p class="glossary-def">
+          Distribution statistique des vitesses dans un gaz à l'équilibre thermique.
+          Sa <em>queue</em> (vitesses élevées) contient les électrons assez énergétiques
+          pour ioniser : $f(v) \propto v^{2}\,e^{-mv^{2}/2k_B T}$.
+        </p>
+      </div>
+
+      <div class="glossary-card">
+        <span class="glossary-term">Section efficace <span class="symbol">σ</span></span>
+        <p class="glossary-def">
+          Surface équivalente représentant la probabilité d'une collision (ionisation,
+          excitation, élastique) entre un électron et un neutre. Dépend fortement de
+          l'énergie de l'électron.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============== CHAMPS & DYNAMIQUE ============== -->
+  <div class="glossary-cat">
+    <h2 class="glossary-cat-title"><span class="cat-icon">🌀</span> Champs &amp; dynamique</h2>
+    <div class="glossary-grid">
+
+      <div class="glossary-card">
+        <span class="glossary-term">Force de Lorentz</span>
+        <p class="glossary-def">
+          Force totale subie par une charge $q$ dans des champs $\vec{E}$ et $\vec{B}$ :
+          $\vec{F} = q\,\vec{E} + q\,\vec{v}\times\vec{B}$. Base de la dynamique des
+          particules chargées dans le moteur.
+        </p>
+      </div>
+
+      <div class="glossary-card">
+        <span class="glossary-term">Champ électrique <span class="symbol">E</span></span>
+        <p class="glossary-def">
+          Dans le canal du moteur, $\vec{E}$ est <strong>axial</strong> (anode → sortie).
+          Il accélère les ions Xe⁺ vers l'extérieur et repousse les électrons vers l'anode.
+        </p>
+      </div>
+
+      <div class="glossary-card">
+        <span class="glossary-term">Champ magnétique <span class="symbol">B</span></span>
+        <p class="glossary-def">
+          Champ <strong>radial</strong> imposé par des bobines, qui piège les électrons
+          en zone de décharge en les forçant à effectuer une dérive azimutale.
+        </p>
+      </div>
+
+      <div class="glossary-card">
+        <span class="glossary-term">Dérive E × B <span class="symbol">v_D</span></span>
+        <p class="glossary-def">
+          Vitesse de dérive d'une charge piégée dans des champs croisés :
+          $\vec{v}_D = \dfrac{\vec{E}\times\vec{B}}{B^{2}}$. Indépendante du signe de la
+          charge — d'où le <strong>courant de Hall</strong> azimutal.
+        </p>
+      </div>
+
+      <div class="glossary-card">
+        <span class="glossary-term">Rayon de Larmor <span class="symbol">r_L</span></span>
+        <p class="glossary-def">
+          Rayon de gyration d'une particule chargée autour d'une ligne de champ $\vec{B}$ :
+          $r_L = \dfrac{m\,v_\perp}{|q|\,B}$. Pour les e⁻ : ~1 mm (piégés). Pour Xe⁺ :
+          beaucoup plus grand que le canal.
+        </p>
+      </div>
+
+      <div class="glossary-card">
+        <span class="glossary-term">Magnétisation</span>
+        <p class="glossary-def">
+          Une particule est <strong>magnétisée</strong> si $r_L \ll L$ (taille du système).
+          C'est le cas des électrons (magnétisés, piégés) mais pas des ions Xe⁺
+          (non magnétisés, accélérés librement par $\vec{E}$).
+        </p>
+      </div>
+
+      <div class="glossary-card">
+        <span class="glossary-term">Courant de Hall</span>
+        <p class="glossary-def">
+          Courant <strong>azimutal</strong> formé par la dérive E×B des électrons piégés.
+          Il est responsable du nom du moteur (analogie avec l'effet Hall en solide).
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============== PROPULSION ============== -->
+  <div class="glossary-cat">
+    <h2 class="glossary-cat-title"><span class="cat-icon">🚀</span> Propulsion ionique</h2>
+    <div class="glossary-grid">
+
+      <div class="glossary-card">
+        <span class="glossary-term">Anode</span>
+        <p class="glossary-def">
+          Électrode positive située au fond du canal de décharge. Reçoit les électrons et
+          impose le potentiel +200…+400 V à l'origine du champ axial $\vec{E}$.
+        </p>
+      </div>
+
+      <div class="glossary-card">
+        <span class="glossary-term">Cathode creuse</span>
+        <p class="glossary-def">
+          Émetteur d'électrons situé à l'extérieur du canal. Sert à <strong>amorcer la décharge</strong>
+          et à <strong>neutraliser le faisceau d'ions</strong> en sortie (sinon le satellite se
+          chargerait).
+        </p>
+      </div>
+
+      <div class="glossary-card">
+        <span class="glossary-term">Décharge</span>
+        <p class="glossary-def">
+          Courant électrique permanent entre anode et cathode à travers le plasma.
+          Caractérisée par sa tension $U_d$ (200–400 V) et son courant $I_d$ (qq A).
+        </p>
+      </div>
+
+      <div class="glossary-card">
+        <span class="glossary-term">Vitesse d'éjection <span class="symbol">v_e</span></span>
+        <p class="glossary-def">
+          Vitesse des ions Xe⁺ sortant du moteur :
+          $v_e = \sqrt{\dfrac{2\,q\,U_d}{m_i}}$. Typiquement <strong>15–30 km/s</strong>.
+        </p>
+      </div>
+
+      <div class="glossary-card">
+        <span class="glossary-term">Poussée <span class="symbol">F</span></span>
+        <p class="glossary-def">
+          Force générée par l'éjection du plasma : $F = \dot{m}\,v_e$. Pour un moteur Hall :
+          ~10–500 mN — faible, mais sur des durées de milliers d'heures.
+        </p>
+      </div>
+
+      <div class="glossary-card">
+        <span class="glossary-term">Impulsion spécifique <span class="symbol">I_sp</span></span>
+        <p class="glossary-def">
+          Mesure d'efficacité du carburant : $I_{sp} = v_e/g_0$, en secondes.
+          Hall : <strong>1500–3000 s</strong>. Chimique : ~250–450 s. Plus c'est élevé,
+          moins on consomme.
+        </p>
+      </div>
+
+      <div class="glossary-card">
+        <span class="glossary-term">Débit massique <span class="symbol">ṁ</span></span>
+        <p class="glossary-def">
+          Masse de propergol éjectée par seconde (en kg/s ou mg/s). Réglable via le
+          débitmètre. Compromis : ↑ ṁ → ↑ poussée mais ↑ consommation.
+        </p>
+      </div>
+
+      <div class="glossary-card">
+        <span class="glossary-term">Équation de Tsiolkovski</span>
+        <p class="glossary-def">
+          Relation fondamentale de l'astronautique :
+          $\Delta v = v_e \ln(m_0/m_f)$. Plus $v_e$ (donc $I_{sp}$) est grand,
+          moins de carburant nécessaire pour un même $\Delta v$.
+        </p>
+      </div>
+
+      <div class="glossary-card">
+        <span class="glossary-term">Δv (delta-v)</span>
+        <p class="glossary-def">
+          Variation de vitesse totale qu'une mission demande au véhicule : insertion orbite,
+          maintien à poste, transfert interplanétaire. Métrique-clé pour dimensionner le
+          carburant.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============== ÉLECTRONIQUE DE PUISSANCE ============== -->
+  <div class="glossary-cat">
+    <h2 class="glossary-cat-title"><span class="cat-icon">⚡</span> Électronique de puissance</h2>
+    <div class="glossary-grid">
+
+      <div class="glossary-card">
+        <span class="glossary-term">PPU <span class="symbol">Power Processing Unit</span></span>
+        <p class="glossary-def">
+          Module électronique qui convertit la puissance bus du satellite (~100 V DC)
+          en plusieurs tensions régulées requises par le moteur (anode, bobines, cathode,
+          allumeur).
+        </p>
+      </div>
+
+      <div class="glossary-card">
+        <span class="glossary-term">Convertisseur DC/DC</span>
+        <p class="glossary-def">
+          Bloc d'électronique de puissance qui transforme une tension continue d'entrée
+          en une tension continue de sortie différente, avec un rendement &gt; 90 %.
+        </p>
+      </div>
+
+      <div class="glossary-card">
+        <span class="glossary-term">Buck (abaisseur)</span>
+        <p class="glossary-def">
+          Topologie DC/DC qui <strong>diminue</strong> la tension :
+          $V_{out} = \alpha\,V_{in}$ avec $\alpha < 1$. Utilisé pour alimenter les
+          bobines et la cathode.
+        </p>
+      </div>
+
+      <div class="glossary-card">
+        <span class="glossary-term">Boost (élévateur)</span>
+        <p class="glossary-def">
+          Topologie DC/DC qui <strong>augmente</strong> la tension :
+          $V_{out} = V_{in}/(1-\alpha)$. Utilisé pour générer la haute tension d'allumeur.
+        </p>
+      </div>
+
+      <div class="glossary-card">
+        <span class="glossary-term">Full-bridge isolé</span>
+        <p class="glossary-def">
+          Topologie en pont complet avec transformateur : permet une <strong>isolation
+          galvanique</strong> et un fort rapport de transformation. Idéal pour la décharge
+          anodique haute puissance.
+        </p>
+      </div>
+
+      <div class="glossary-card">
+        <span class="glossary-term">PWM <span class="symbol">Pulse Width Modulation</span></span>
+        <p class="glossary-def">
+          Modulation de largeur d'impulsion. Signal carré dont on fait varier le rapport
+          cyclique pour piloter un interrupteur (MOSFET) et réguler la tension de sortie.
+        </p>
+      </div>
+
+      <div class="glossary-card">
+        <span class="glossary-term">Rapport cyclique <span class="symbol">α</span></span>
+        <p class="glossary-def">
+          Fraction du temps pendant laquelle l'interrupteur est fermé sur une période :
+          $\alpha = t_{on}/T$. Détermine la tension moyenne de sortie d'un convertisseur
+          PWM.
+        </p>
+      </div>
+
+      <div class="glossary-card">
+        <span class="glossary-term">Rendement <span class="symbol">η</span></span>
+        <p class="glossary-def">
+          Rapport entre puissance utile en sortie et puissance totale absorbée.
+          Pour la PPU : $\eta = \dfrac{P_{out}}{P_{out}+P_{cond}+P_{sw}+P_{mag}}$.
+          Cible : &gt; 90 %.
+        </p>
+      </div>
+
+      <div class="glossary-card">
+        <span class="glossary-term">Mode "respiration"</span>
+        <p class="glossary-def">
+          Oscillation basse fréquence (10–30 kHz) du plasma, due à un déséquilibre cyclique
+          entre ionisation et évacuation des ions. La PPU doit rester stable face à ces
+          variations de charge.
+        </p>
+      </div>
+
+      <div class="glossary-card">
+        <span class="glossary-term">CEM <span class="symbol">Compatibilité ÉlectroMagnétique</span></span>
+        <p class="glossary-def">
+          Discipline qui garantit qu'un système électrique ne perturbe pas (et n'est pas
+          perturbé par) son environnement. Critique pour la cohabitation PPU / instruments
+          satellite.
+        </p>
+      </div>
+
+      <div class="glossary-card">
+        <span class="glossary-term">Rad-hard</span>
+        <p class="glossary-def">
+          Composants <strong>durcis aux radiations</strong> (TID, SEE) capables de survivre
+          aux ceintures de Van Allen et aux particules cosmiques. Indispensables pour les
+          missions long-cours.
+        </p>
+      </div>
+
+      <div class="glossary-card">
+        <span class="glossary-term">Isolation galvanique</span>
+        <p class="glossary-def">
+          Séparation électrique entre primaire et secondaire d'un convertisseur (via
+          transformateur ou opto-coupleur). Évite les boucles de masse et protège
+          l'électronique en cas de défaut côté plasma.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="site-footer">
+  <div class="container">
+    <p><strong>Auteurs</strong> : Dylan Perinetti, Maxime Deplace, Hamet Doumbouya</p>
+    <p>CNAM — Ingénieur2000 — Génie Électrique — Électronique de puissance</p>
+    <p class="footer-note">Glossaire complémentaire au site interactif sur les moteurs à effet Hall.</p>
+  </div>
+</footer>
+
+</body>
+</html>

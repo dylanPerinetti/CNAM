@@ -671,3 +671,197 @@ table {
     animation-iteration-count: 1 !important;
   }
 }
+
+/* =========================================================
+   BOUTON "PRÉSENTER" + LIEN GLOSSAIRE
+   ========================================================= */
+.btn-present {
+  margin-left: 10px;
+  background: linear-gradient(120deg, var(--primary), var(--primary-2));
+  color: white;
+  border: none;
+  padding: 7px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 4px 14px -4px var(--primary-2);
+}
+.btn-present:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px -4px var(--primary-2);
+}
+.nav-glossary {
+  border: 1px solid var(--border);
+}
+
+/* =========================================================
+   COMPTEUR DE SLIDES (visible en mode présentation)
+   ========================================================= */
+.slide-counter {
+  position: fixed;
+  bottom: 18px;
+  right: 22px;
+  z-index: 200;
+  background: rgba(5, 6, 15, 0.7);
+  color: var(--text);
+  padding: 7px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-family: "SF Mono", Consolas, monospace;
+  border: 1px solid var(--border);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  letter-spacing: 0.05em;
+  pointer-events: none;
+}
+
+/* =========================================================
+   MODE PRÉSENTATION (plein écran)
+   ========================================================= */
+html.presentation-mode {
+  scroll-snap-type: y mandatory;
+}
+body.presentation-mode .site-header,
+body.presentation-mode .hero-scroll-hint,
+body.presentation-mode .site-footer {
+  display: none !important;
+}
+
+body.presentation-mode .hero,
+body.presentation-mode .section,
+body.presentation-mode .section-conclusion {
+  min-height: 100vh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  display: flex;
+  align-items: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+body.presentation-mode .hero > .hero-content,
+body.presentation-mode .section > .container,
+body.presentation-mode .section-conclusion > .container {
+  width: 100%;
+}
+
+/* Compactage du contenu pour tenir en 100vh */
+body.presentation-mode .section-header { margin-bottom: 28px; }
+body.presentation-mode .section-header h2 { font-size: clamp(26px, 3.4vw, 36px); }
+body.presentation-mode .grid-2 { gap: 24px; }
+body.presentation-mode .canvas-card { padding: 14px; }
+body.presentation-mode .canvas-card canvas { height: 240px; }
+body.presentation-mode .formula-box { margin: 10px 0; padding: 12px 14px; }
+body.presentation-mode .text-block p { margin: 0 0 12px; }
+body.presentation-mode .bullet-list { margin: 0 0 14px; }
+body.presentation-mode .bullet-list li { margin-bottom: 6px; }
+body.presentation-mode .hero { padding-top: 20px; padding-bottom: 20px; }
+body.presentation-mode .hero-stats { margin-bottom: 24px; }
+body.presentation-mode .conclusion-card { padding: 36px; }
+
+/* =========================================================
+   PAGE GLOSSAIRE
+   ========================================================= */
+.glossary {
+  padding: 60px 24px 100px;
+}
+.glossary-intro {
+  max-width: 900px;
+  margin: 0 auto 48px;
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 16px;
+}
+.glossary-cat {
+  max-width: 1200px;
+  margin: 0 auto 56px;
+}
+.glossary-cat-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 22px;
+  margin: 0 0 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+}
+.glossary-cat-title .cat-icon {
+  font-size: 26px;
+  filter: drop-shadow(0 0 12px rgba(123,140,255,0.4));
+}
+.glossary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 16px;
+}
+.glossary-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: transform .15s, border-color .15s, box-shadow .15s;
+}
+.glossary-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(123,140,255,0.45);
+  box-shadow: 0 12px 28px -12px rgba(123,140,255,0.35);
+}
+.glossary-term {
+  display: block;
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 15px;
+  letter-spacing: 0.01em;
+  margin-bottom: 6px;
+}
+.glossary-term .symbol {
+  color: var(--primary-2);
+  margin-left: 6px;
+  font-family: "SF Mono", Consolas, monospace;
+  font-weight: 500;
+  font-size: 13px;
+}
+.glossary-def {
+  color: var(--text-dim);
+  font-size: 13.5px;
+  line-height: 1.55;
+  margin: 0;
+}
+.glossary-def strong { color: var(--text); }
+.glossary-def .formula-inline {
+  font-family: "SF Mono", Consolas, monospace;
+  color: var(--primary);
+  font-size: 12.5px;
+}
+
+/* Bouton retour au site (utilisé sur la page glossaire) */
+.btn-back {
+  margin-left: auto;
+  background: rgba(123,140,255,0.12);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background .15s, border-color .15s;
+}
+.btn-back:hover {
+  background: rgba(123,140,255,0.22);
+  border-color: var(--primary);
+  color: var(--text);
+}
+
+@media (max-width: 700px) {
+  .glossary-grid { grid-template-columns: 1fr; }
+  .glossary-cat-title { font-size: 18px; }
+  .btn-present { padding: 6px 10px; font-size: 12px; }
+}
